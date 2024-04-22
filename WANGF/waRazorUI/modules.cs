@@ -60,20 +60,24 @@ namespace waRazorUI
         // 全てのモジュールのファイルを得る。ショートカットは自動解釈される
         private static IEnumerable<string> enumFiles()
         {
-            foreach (var item0 in Directory.EnumerateFiles(Path.Combine(General.GetCommonRootDirectory(),"modules"), "*.*"))
+            var path = Path.Combine(General.GetCommonRootDirectory(), "modules");
+            if (Directory.Exists(path))
             {
-                var item = item0;
-                for (; ; )
+                foreach (var item0 in Directory.EnumerateFiles(path, "*.*"))
                 {
-                    if (item.ToLower().EndsWith(".lnk"))
+                    var item = item0;
+                    for (; ; )
                     {
-                        var next = FileLayout.LnkFileToTargetPath(item);
-                        if (next == null) break;
-                        item = next;
+                        if (item.ToLower().EndsWith(".lnk"))
+                        {
+                            var next = FileLayout.LnkFileToTargetPath(item);
+                            if (next == null) break;
+                            item = next;
+                        }
+                        else break;
                     }
-                    else break;
+                    if (item.EndsWith(".xml") || item.EndsWith(".dll")) yield return item;
                 }
-                if (item.EndsWith(".xml") || item.EndsWith(".dll")) yield return item;
             }
         }
         private static async Task<MyXmlDoc> loadMyXmlDocAsync(string filename)
