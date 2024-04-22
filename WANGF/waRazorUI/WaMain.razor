@@ -1,0 +1,589 @@
+﻿@using System.Threading;
+@using Microsoft.AspNetCore.Components.Forms;
+@using System.IO;
+@using System.IO.Compression;
+@inject IJSRuntime JSRuntime
+@inject NavigationManager uriHelper
+
+@if (ANGFLib.UI.Actions == null || ANGFLib.UI.Actions.isJournalFilePlaying == null || !ANGFLib.UI.Actions.isJournalFilePlaying())
+{
+    @if( HtmlGenerator.useCustomComponent)
+    {
+        @CustomRender
+        ;
+    }
+    else if (HtmlGenerator.ExceptionInfo != null)
+    {
+    <div id="fullOverlay" style="color:red">
+        <h1>例外情報</h1>
+        <p>例外が発生しました。</p>
+        <p>回復方法はありません。@HtmlGenerator.ExceptionWarnText して下さい。</p>
+        <p style="color:darkred">@HtmlGenerator.ExceptionInfo</p>
+        </div>
+    }
+    else if (HtmlGenerator.IsPopupEnabled)
+    {
+        <div id="fullOverlay" >
+            @if (HtmlGenerator.EditingDateTime != DateTime.MinValue)
+            {
+                <div style="border: groove; margin-left:auto; margin-right:auto;width:20em;padding:3em;">
+                    <h2 style="margin-left:auto; margin-right:auto;">日付変更</h2>
+                    <!-- modal dialog -->
+                    <p>
+                        <input type="date" @bind="HtmlGenerator.EditingDateTime" @bind:format="yyyy-MM-dd">
+                        @if (HtmlGenerator.Hour >= 0)
+                        {
+                            <span>時</span>
+                            <input type="text" id="hour" @bind="HtmlGenerator.Hour" style="width:3em" />
+                            <br/>
+                            <span>分</span>
+                            <input type="text" id="minutes" @bind="HtmlGenerator.Minutes" style="width:3em" />
+                        }
+                    </p>
+                    @if (HtmlGenerator.DateTimeOptions != null)
+                    {
+                        @for (int i0 = 0; i0 < HtmlGenerator.DateTimeOptions.Length; i0++)
+                        {
+                            int i = i0;
+                            <input id="@i" type="radio" checked="@(i == 0)"
+                            name="DateTimeOption" @onchange="@(() => HtmlGenerator.DateTimeOption = i)"/>
+                            <label for="@i">@HtmlGenerator.DateTimeOptions[i]</label>
+                            <br/>
+                        }
+                    }
+                    <p>
+                        <button id="dateTimeInputOK" class="btn btn-primary" style="font-size:large" @onclick="HtmlGenerator.DateTimeSETClickedAsync">OK</button>
+                        <button id="dateTimeInputCancel" class="btn btn-secondary" @onclick="HtmlGenerator.DateTimeCanceldAsync">Cancel</button>
+                    </p>
+                </div>
+            }
+            else
+            {
+            // not modal dialogs
+            @if (HtmlGenerator.SimpleList != null && HtmlGenerator.SimpleListTitle != null)
+            {
+                <div class="SimpleListTable">
+                    <p>@HtmlGenerator.SimpleListTitle</p>
+                    <table border="1" style="margin:auto;" class="ScrollableTable">
+                        @foreach (var item in HtmlGenerator.SimpleList)
+                        {
+                            <tr>
+                                <td>@item.Item1</td>
+                                <td>@item.Item2</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            }
+            else @if (HtmlGenerator.SelectedFlagItem != null)
+            {
+                <p>@HtmlGenerator.SelectedFlagItem.name</p>
+                <input type="text" id="flagInputText" @bind="HtmlGenerator.FlagInputTextValue" />
+                <br />
+                <button id="lineInputOK" class="btn btn-primary" style="font-size:large" @onclick="HtmlGenerator.FlagInputSETClickedAsync">SET</button>
+            }
+            else @if (HtmlGenerator.FlagEditorList != null)
+            {
+                for (int i = 0; i < HtmlGenerator.FlagEditorList.Length; i++)
+                {
+                    int i0 = i;
+                    var item = HtmlGenerator.FlagEditorList[i];
+                    <button class="btn btn-primary btn-block" @onclick="(async () => await HtmlGenerator.FlagEditAsync(i0))">@item.name</button>
+                    <br />
+                }
+            }
+            <br />
+            <button id="closePopup" class="btn btn-primary" style="font-size:large" @onclick="(async () => await HtmlGenerator.PopupCloseAsync())">Close</button>
+        }
+    </div>
+}
+else
+{
+    @if (ANGFLib.SystemFile.IsDebugMode)
+    {
+        <div style="background-color:red;color:white;text-align:center;margin:2px;">[[[DEBUG ON]]]</div>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(HtmlGenerator.RealtimeStatusMessage))
+    {
+        <div style="background-color:red;color:white;text-align:center;margin:2px;">@HtmlGenerator.RealtimeStatusMessage</div>
+    }
+
+    @if (HtmlGenerator.IsJounalResultEnable)
+    {
+        <h2>Journal Reslts</h2>
+        foreach (var item in ANGFLib.General.EnumJounalResults())
+        {
+            @item
+            <br />
+        }
+    }
+
+    @if (HtmlGenerator.IsBatchTestingResultEnable)
+    {
+        <h2>Batch Testing Reslts</h2>
+            foreach (var item in HtmlGenerator.EnumBatchTestingResults)
+        {
+            @item
+                <br />
+            }
+            <button id="closeBatchTestingResult" class="btn btn-primary" @onclick="BatchTestingCloseClicked">Close</button>
+        }
+
+    // ProgressMessage Part-1
+    @if (!string.IsNullOrWhiteSpace(HtmlGenerator.ProgressMessage))
+    {
+        <p>[[[<span style="background-color:black;color:white">@HtmlGenerator.ProgressMessage</span>]]]</p>
+    }
+
+        <!--
+        <button class="btn btn-primary" @onclick="debugButton">DEBUG</button>
+        -->
+
+        @if (!ANGFLib.General.IsStatusHide())
+        {
+            <div id="statusArea" style="@HtmlGenerator.statusBackStyle()">
+                <span class="miniStatus" style="width:20em;"><span style="@HtmlGenerator.dateTimeStyle()">@HtmlGenerator.dateTime()</span></span>
+                <span class="miniStatus" style="width:10em;font-size:small">@HtmlGenerator.kishoTime()</span>
+                <span class="miniStatus" style="width:10em;font-size:small">@HtmlGenerator.sleepTime()</span>
+
+                @foreach (var item in ANGFLib.SimpleName<ANGFLib.MiniStatus>.List.Values.OrderBy(c => c.Priority))
+                {
+                    <span class="miniStatus" style="@HtmlGenerator.createMiniStatusCss(item)">@HtmlGenerator.createMiniStatusText(item)</span>
+                }
+            </div>
+        }
+
+        @if (HtmlGenerator.EquipMode == EEquipMode.GeneralItemList && !HtmlGenerator.isNotReady)
+    {
+        <div id="generalItemList">
+            <p>@HtmlGenerator.GeneralItemHeader</p>
+            <select style="width:100%" size="10" @bind="HtmlGenerator.GeneralItemId">
+                @foreach (var item in HtmlGenerator.EnumGeneralItems())
+                {
+                    <option value="@item.Id">
+                        @(HtmlGenerator.CreateGeneralLabel(item))
+                    </option>
+                }
+            </select>
+            @if (HtmlGenerator.EnableGeneralItemCount)
+            {
+                <div style="margin-bottom:1px">
+                    <span>数量</span>
+                    <input type="number" min="1" max="@HtmlGenerator.GeneralItemCountMax" id="lineInputText" @bind="HtmlGenerator.GeneralItemCount" />
+                </div>
+            }
+            <button class="btn btn-primary btn-block" @onclick="HtmlGenerator.GeneralItemOKAsync">OK</button>
+            <button class="btn btn-secondary btn-block btn-sm" @onclick="HtmlGenerator.GeneralItemCancelAsync">Cancel</button>
+            <p id="eqItemExplanationArea">@HtmlGenerator.GeneralItemExplanation</p>
+            </div>
+        }
+        else if (HtmlGenerator.EquipMode == EEquipMode.EquipSelectList && !HtmlGenerator.isNotReady)
+        {
+            <select style="width:100%" @onchange="HtmlGenerator.EquipTypeSelectionChanged">
+                @{
+                    HtmlGenerator.FixCurrentEquipIndex();
+                    var list = ANGFLib.EquipType.List.Values.OrderBy(c=>c.Priority).ToArray();
+                    @for (int i = 0; i < list.Count(); i++)
+                    {
+                        @if(ANGFLib.Flags.IsExpandEquip || !list[i].IsVisibleIfExpanded)
+                        {
+                            if (i == HtmlGenerator.CurrentEquipIndex)
+                            {
+                                <option value="@list[i].Id" selected="selected">
+                                    @(list[i].Name)
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@list[i].Id">
+                                    @(list[i].Name)
+                                </option>
+                            }
+                        }
+                    }
+                }
+            </select>
+
+            <select style="width:100%" size="10" @onchange="HtmlGenerator.eqItemSelectionChanged">
+            @for (int i = 0; i < ANGFLib.General.GetCandidateEquipItems(HtmlGenerator.CurrentEquipIndex).Length; i++)
+            {
+                var item = ANGFLib.General.GetCandidateEquipItems(HtmlGenerator.CurrentEquipIndex)[i];
+                <option value="@item.Id">
+                    @(item.HumanReadableName)
+                </option>
+            }
+            <option value="null">なし</option>
+        </select>
+
+        <button class="btn btn-primary btn-block" @onclick="HtmlGenerator.eqItemOKAsync">OK</button>
+        <button class="btn btn-secondary btn-block btn-sm" @onclick="HtmlGenerator.eqItemCancelAsync">Cancel</button>
+        <p id="eqItemExplanationArea">@HtmlGenerator.eqItemExplanation</p>
+    }
+    else
+    {
+
+        <div id="anyHtmlArea" >
+            <!-- @onclick="(async () => await HtmlGenerator.menuDoneAsync(0))" -->
+            @((MarkupString)HtmlGenerator.myMarkup)
+        </div>
+
+        <div id="splashArea" @onclick="(async () => await HtmlGenerator.menuDoneAsync(0))">
+            @((MarkupString)HtmlGenerator.splashMarkup)
+        </div>
+
+        @if (HtmlGenerator.PictureUrl != null)
+        {
+            <div id="pictureArea">
+                <p><img src='@((MarkupString)HtmlGenerator.PictureUrl)' /></p>
+            </div>
+        }
+
+        <div id="messageArea">
+            @foreach (var message in HtmlGenerator.messages)
+            {
+                @if (message.IsTalkerDokuhaku||message.IsSuperMessage)
+                {
+                    <span style="@HtmlGenerator.getMessageStyle(message)">@message.Message</span>
+                }
+                else
+                {
+                    <span style="@HtmlGenerator.getNameStyle(message)">@message.TalkerName<span>:&nbsp;</span></span>
+                    <span style="@HtmlGenerator.getMessageStyle(message)">@message.Message</span>
+                }
+                <br />
+            }
+        </div>
+
+        <div id="commandArea">
+            @if (HtmlGenerator.listLabels?.Length > 0)
+            {
+                <p style="font-size:2em;color:Blue">@HtmlGenerator.menuPrompt</p>
+                for (int i = 0; i < HtmlGenerator.listLabels.Length; i++)
+                {
+                    bool isHot = false;
+                    if (HtmlGenerator.SimpleMenuTypes != null
+                    && HtmlGenerator.SimpleMenuTypes.Length > i)
+                    {
+                        switch (HtmlGenerator.SimpleMenuTypes[i])
+                        {
+                            case ANGFLib.SimpleMenuType.Default:
+                                isHot = (i == HtmlGenerator.listLabels.Length - 1);
+                                break;
+                            case ANGFLib.SimpleMenuType.Hot:
+                                isHot = true;
+                                break;
+                        }
+                    }
+                    string bc = isHot ? "btn btn-danger" : "btn btn-primary";
+                    int i0 = i;
+                    <button class="@bc" @onclick="(async () => await HtmlGenerator.menuDoneAsync(i0))" title="@HtmlGenerator.listMouseOverTexts[i0]">@HtmlGenerator.listLabels[i]</button>
+                    if (HtmlGenerator.listExplanations[i] != null)
+                    {
+                        <br />@HtmlGenerator.listExplanations[i];<br />
+                    }
+                }
+                @if (HtmlGenerator.UploadEnabled || HtmlGenerator.UploadJournalingEnabled)
+                {
+                    <span>
+                        @HtmlGenerator.UploadDescription:
+                        <InputFile OnChange="@UploadFiles" />
+                    </span>
+                }
+            }
+            @if (HtmlGenerator.nextButtonEnabled)
+            {
+                <button class="btn btn-primary" @onclick="nextClicked">NEXT</button>
+            }
+        </div>
+
+        <div id="lineInputArea">
+            @if (HtmlGenerator.lineInputTextValue != null)
+            {
+                <p>@HtmlGenerator.lineInputPrompt</p>
+                <input type="text" id="lineInputText" @bind="HtmlGenerator.lineInputTextValue" />
+                <br />
+                <p style="font-size:2em;color:red">@HtmlGenerator.lineInputErrorMessage</p>
+                <button id="lineInputOK" class="btn btn-primary" style="font-size:large" @onclick="lineInputOKClicked">OK</button>
+                <button id="lineInputReturn" class="btn btn-secondary" @onclick="lineInputReturnClicked">Default Value</button>
+            }
+        </div>
+
+        <div id="menuArea">
+            @if (HtmlGenerator.listMenus != null)
+            {
+                @if (HtmlGenerator.listMenus.Length > 0)
+                {
+                    <p style="font-size:2em;color:Blue">MENU</p>
+                    @for (int i = 0; i < HtmlGenerator.listMenus.Length; i++)
+                    {
+                        int i0 = i;
+                        if (HtmlGenerator.listMenus[i0].IsMenuEnabled())
+                        {
+                            string bc = "btn btn-outline-primary btn-sm";
+                            <button class="@bc" @onclick="(async () => await HtmlGenerator.mainMenuDoneAsync(i0))">@HtmlGenerator.listMenus[i].Label</button>
+                        }
+                    }
+                }
+            }
+        </div>
+
+        @if (HtmlGenerator.IsGameExplainEnabled)
+        {
+                foreach (var item in Modules.EnumEmbeddedModulesAsync().Result.OrderByDescending(c => c.GetTouchedDateTime()))
+            {
+                <span style="font-weight:bold; font-size:larger">@item.name</span>
+                if (item.Is18K) {
+                    <span style="color:red">(18禁)</span>
+                }
+                @item.description<br />
+            }
+        }
+
+        @if (!string.IsNullOrWhiteSpace(HtmlGenerator.TotalReport))
+        {
+            var reader = new System.IO.StringReader(HtmlGenerator.TotalReport);
+            for (; ; )
+            {
+                var s = reader.ReadLine();
+                if (s == null) break;
+                @s
+                <br />
+
+            }
+        }
+
+        <div style="margin:8px;">
+            <small>
+                GIFT CODE
+                <input type="text" id="giftCodeText" @bind="HtmlGenerator.GiftCodeTextValue" />
+                <button id="giftCodeOK" class="btn btn-outline-dark btn-sm" @onclick="GiftCodeOKClicked">OK</button>
+            </small>
+        </div>
+
+        @if (ANGFLib.SystemFile.IsDebugMode)
+        {
+            <textarea @bind="HtmlGenerator.JournalingDirectSourceTextValue" style="width:100%;"
+                      placeholder="Journaling Direct Source Here"></textarea>
+        }
+    }
+}
+
+@if (HtmlGenerator.GameHintUrl != null)
+{
+    <div style="text-align:center">
+        <mark>[[<a href="@HtmlGenerator.GameHintUrl">このゲームのヒント情報</a>]]</mark>
+    </div>
+}
+
+<div style="text-align:center">
+    [[<a href="http://erika.piedey.co.jp/wangfrank/" target="_blank">このゲームのランキング</a>]]
+</div>
+
+@if (HtmlGenerator.IsAdEnabled())
+{
+    var ad = HtmlGenerator.GetNextAd();
+    @if( ad != null)
+    {
+        <div class="adblock" style="display: flex;">
+            <div style="font-size: smaller;" class="addiv1">
+                広告
+            </div>
+            <div class="addiv2">
+                <a href="@ad.Uri" target="_blank">@ad.Description</a>
+            </div>
+            <div class="addiv1">
+                <a href="@ad.AuthorUri" target="_blank">@ad.AuthorName</a>著
+            </div>
+            <div style="font-size: smaller;" class="addiv2">
+                <a href="https://www.piedey.co.jp/blog/default.modf?s=ep" target="_blank"><img src="_content/waRazorUI/pdlogo.jpg" /></a>
+            </div>
+        </div>
+    }
+}
+
+<div class="text-center p-1" style="background-color: black">
+    <span class="fw-bold" style="color:white;">
+        @waRazorUIConstants.ShortName
+        :
+        @waRazorUIConstants.LongName
+        Version: @waRazorUIConstants.Version
+        (@waRazorUIConstants.BuildDateTimeString)
+    </span>
+</div>
+
+<div style="text-align:center">
+    @if (waRazorUIConstants.IsTesting)
+    {
+        <span>本ソフトは公開テスト中です。</span>
+    }
+    <span>不具合、疑問点がある場合は、<a href="https://twitter.com/KIRARIN56294043" > Twitterの同人サークルKIRARIN公式(@@KIRARIN56294043) </a> までご一報下さい。</span>
+</div>
+}
+else
+{
+    // ProgressMessage Part-2
+    @if (!string.IsNullOrWhiteSpace(HtmlGenerator.ProgressMessage))
+    {
+        <p>[[[<span style="background-color:black;color:white">@HtmlGenerator.ProgressMessage</span>]]]</p>
+    }
+}
+
+@functions
+{
+    #nullable enable
+    private RenderFragment? CustomRender { get; set; }
+#nullable restore
+
+    void nextClicked()
+    {
+        HtmlGenerator.nextButtonEnabled = false;
+        HtmlGenerator.source.Cancel();
+    }
+
+    async Task debugButton()
+    {
+        await JsWrapper.setBackColorWrapperAsync("#FFFFFF");
+    }
+
+    public async Task testMethod()
+    {
+        await JsWrapper.setBackColorWrapperAsync("#FF0000");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        try
+        {
+            if (firstRender)
+            {
+                RenderComponent();
+                ANGFLib.Util.InitCulture();
+                HtmlGenerator.OnInitializedSub(this, JSRuntime, uriHelper);
+                await JsWrapper.setBackColorWrapperAsync("#FFFFFF");
+                await wangfMain.InitializeAsync();
+                await HtmlGenerator.ShowGameSelectAsync((await Modules.EnumEmbeddedModulesAsync()).ToArray());
+            }
+            HtmlGenerator.OnInitializedSub(this, JSRuntime, uriHelper);
+        }
+        catch (Exception ex)
+        {
+            HtmlGenerator.ExceptionInfo = ex.ToString();
+            // バッチテストが進行中なら自動クリアする　(操作できないため)
+            _ = wangflib.BatchTest.BatchTestingForFramework.ClearAsync();/* DIABLE ASYNC WARN */
+            StateHasChanged();
+        }
+    }
+
+    async void BatchTestingCloseClicked()
+    {
+        await wangflib.BatchTest.BatchTestingForFramework.ClearAsync();
+        await wangfMain.GetBatchTestingAsync();
+        StateHasChanged();
+    }
+
+    void lineInputOKClicked()
+    {
+        if (HtmlGenerator.lineInputTextValue.Length <= 0)
+        {
+            HtmlGenerator.lineInputErrorMessage = "Enter Any Text Here.";
+            return; // not accept this case
+        }
+        HtmlGenerator.lineInputErrorMessage = "";
+        HtmlGenerator.source.Cancel();
+    }
+    void lineInputReturnClicked()
+    {
+        HtmlGenerator.lineInputTextValue = HtmlGenerator.lineInputDefaultValue;
+    }
+    public static async void GiftCodeOKClicked()
+    {
+        await HtmlGenerator.GiftCodeOKClickedAsync();
+    }
+
+    public void Update()
+    {
+        _ = InvokeAsync(() =>
+        {
+            StateHasChanged();
+        });
+    }
+    public void Reload()
+    {
+        _ = InvokeAsync(() =>
+        {
+            var timer = new Timer(new TimerCallback(_ =>
+                    {
+                        uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
+                    }), null, 100, Timeout.Infinite);
+        });
+    }
+
+    private async Task UploadJournalingFiles(InputFileChangeEventArgs e)
+    {
+        foreach (var file in e.GetMultipleFiles(1))
+        {
+            var ms = new MemoryStream();
+            await file.OpenReadStream(maxAllowedSize: 100000000).CopyToAsync(ms);
+            var image = ms.ToArray();
+        }
+    }
+
+    private async Task UploadFiles(InputFileChangeEventArgs e)
+    {
+        foreach (var file in e.GetMultipleFiles(1))
+        {
+            var ms = new MemoryStream();
+            await file.OpenReadStream(maxAllowedSize: 100000000).CopyToAsync(ms);
+            var image = ms.ToArray();
+
+            if (HtmlGenerator.UploadEnabled)
+            {
+                // 全ZIPファイルのアップロード
+                // clear all before write
+                await wangfUtil.LocalStorage.ClearAllAsync();
+
+                using var zipArchive = new ZipArchive(new MemoryStream(image));
+                foreach (var item in zipArchive.Entries)
+                {
+                    using var stream3 = item.Open();
+                    var image2 = ANGFLib.Util.ReadStreamToByteArray(stream3);
+                    var body = System.Text.Encoding.UTF8.GetString(image2);
+                    var filename = wangfUtil.FileNameDecoder(item.FullName);
+                    await wangfUtil.LocalStorage.SetItemAsync(filename, body);
+                }
+                HtmlGenerator.TriggerReload();
+            }
+            else
+            {
+                await HtmlGenerator.ClearAllAsync();
+                // ジャーナリングファイル再生開始
+                var src = System.Text.Encoding.UTF8.GetString(image);
+                ANGFLib.JournalPlaybackQueue.Enqueue(new ANGFLib.JournalingInputDescripter(ANGFLib.General.TestingAssembly ?? System.Reflection.Assembly.GetExecutingAssembly(), ANGFLib.Constants.JournalingDirectHeader + src));
+                // コマンド待ちであることを暗に期待している。それ以外のタイミングで使うと吹っ飛ぶ。
+                // 穏便にメニューを閉じてジャーナリング再生に移行する。
+                HtmlGenerator.duplicateIndexInCreateMenuItemsAsync = -2;
+                HtmlGenerator.source.Cancel();
+                StateHasChanged();
+            }
+        }
+    }
+
+    private RenderFragment CreateComponent() => builder =>
+      {
+          builder.OpenComponent(0, HtmlGenerator.TypeOfCustomComponent);
+          builder.CloseComponent();
+      };
+    private void RenderComponent()
+    {
+        CustomRender = CreateComponent();
+    }
+    public async Task CallAnyMethodAsync(Func<Task> x)
+    {
+        await InvokeAsync(async () =>
+        {
+            await x();
+        });
+    }
+}
+

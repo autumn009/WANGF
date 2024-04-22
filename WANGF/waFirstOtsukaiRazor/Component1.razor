@@ -1,0 +1,14 @@
+﻿<div class="my-component">
+    This component is defined in the <strong>waFirstOtsukaiRazor</strong> library.
+</div>
+<select @bind="selected">
+    <option value="A">A</option>
+    <option value="B">B</option>
+    <option value="C">C</option>
+</select>
+
+<button id="SampleOK" class="btn btn-primary" style="font-size:large" @onclick="async ()=> await waFirstOtsukaiRazerUtil.ButtonOKAsync(selected)">CLOSE</button>
+
+@code{
+    private string selected ="N";
+}

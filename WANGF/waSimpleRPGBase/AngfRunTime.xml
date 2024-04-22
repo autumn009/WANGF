@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://angf.autumn.org/std001">
+  <module>waSimpleRPGBase.dll</module>
+  <startupModule>0</startupModule>
+  <name>シンプルRPGベース・ライブラリ</name>
+  <id>{0af784bd-f0d6-47af-9d32-a6dcada569e0}</id>
+  <shareWorld></shareWorld>
+  <require></require>
+</root>

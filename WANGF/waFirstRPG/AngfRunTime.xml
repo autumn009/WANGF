@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://angf.autumn.org/std001">
+  <module>waFirstRPG.dll</module>
+  <startupModule>1</startupModule>
+  <name>はじめてのRPG</name>
+  <description>WANGFシステムの基本的な使い方を習得するチュートリアルとなる簡単なRPGです。パーティー編成の操作方法を体験できます。</description>
+  <id>{a6090e7b-ab8e-4f25-82fe-740009adbfd3}</id>
+  <shareWorld></shareWorld>
+  <require></require>
+</root>

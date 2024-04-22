@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <TargetFramework>net8.0</TargetFramework>
+	  <Configurations>Debug;Release;DirectKickable</Configurations>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <FileVersion>7.0.0.0</FileVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="AngfRunTime.xml" />
+    <None Remove="testPage001.html" />
+    <None Remove="testPage001.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="AngfRunTime.xml" />
+    <EmbeddedResource Include="testPage001.html" />
+    <EmbeddedResource Include="testPage001.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\waFirstOtsukaiRazor\waFirstOtsukaiRazor.csproj" />
+    <ProjectReference Include="..\wangflib\wangflib.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://angf.autumn.org/std001">
+  <module>ExtOtsukai.dll</module>
+  <startupModule>1</startupModule>
+  <name>お姉ちゃんのお使い</name>
+  <description>WANGFのシェアワールド機能の紹介ゲームです。【はじめてのお使い】と同じ世界、同じ登場人物で、別の主人公による物語が展開します。</description>
+  <id>{9E5934C3-69AC-4eb7-AA53-2B94B1399361}</id>
+  <shareWorld></shareWorld>
+  <require>{75E0A726-C44E-4fc9-BCF9-76C3DF1C54B8}</require>
+</root>

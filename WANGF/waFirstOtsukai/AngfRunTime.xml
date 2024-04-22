@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://angf.autumn.org/std001">
+  <module>FirstOtsukai.dll</module>
+  <startupModule>1</startupModule>
+  <name>はじめてのお使い</name>
+  <description>WANGFシステムの基本的な使い方を習得するチュートリアルとなる簡単なゲームです。会話、移動、買い物、着替えの操作方法を体験できます。</description>
+  <id>{75E0A726-C44E-4fc9-BCF9-76C3DF1C54B8}</id>
+  <shareWorld></shareWorld>
+  <require></require>
+</root>

@@ -1,0 +1,118 @@
+﻿@using waRazorUI;
+
+<nav class="flex-column">
+    @if (!HtmlGenerator.isNotReady && !ANGFLib.UI.Actions.isJournalFilePlaying())
+    {
+        @if (ANGFLib.General.IsExpandEquipRequied())
+        {
+            <button class="btn btn-primary btn-sm" @onclick="(async () =>ANGFLib.Flags.IsExpandEquip=!ANGFLib.Flags.IsExpandEquip )">
+                @(
+                    ANGFLib.Flags.IsExpandEquip ? "-" : "+"
+                    )
+            </button>
+            <br />
+        }
+
+        var equipTypes = ANGFLib.EquipType.List.Values.OrderBy(c => c.Priority).ToArray();
+        var memberIds = ANGFLib.Party.EnumPartyMembers();
+        var displayName = memberIds.Count() > 1;
+        foreach (var memberId0 in memberIds)
+        {
+            var memberId = memberId0;   // capture
+            ANGFLib.Person member = ANGFLib.Person.List[memberId];
+            ANGFLib.IPartyMember pmember = member as ANGFLib.IPartyMember;
+
+            if (displayName)
+            {
+                <span style="color:white;font-size:larger">
+                    @(member.HumanReadableNameForEquipArea)
+                </span>
+                <br />
+            }
+
+            @for (int i = 0; i < equipTypes.Length; i++)
+            {
+                int i0 = i;
+                var item = ANGFLib.Items.GetItemByNumber(((ANGFLib.IPartyMember)member).GetEquippedItemIds().ElementAt(i));
+                if (!ANGFLib.General.IsEquippableItem(i, memberId, item.Id)) continue;
+                if (!ANGFLib.Flags.IsExpandEquip && equipTypes[i].IsVisibleIfExpanded) continue;
+                if (equipTypes[i].IsVisibleByProc != null && !equipTypes[i].IsVisibleByProc()) continue;
+
+                var name = item.IsItemNull ? "---" : item.HumanReadableName;
+                var description = item.IsItemNull ? "装備されていない" : item.FullDescription;
+                var buiName = equipTypes[i0].ShortName ?? equipTypes[i0].HumanReadableName;
+
+                @if (pmember.GetDirectEquipEnabled() && (HtmlGenerator.IsEquipButtonDisabled == null || HtmlGenerator.IsEquipButtonEnabledForDirectAPI))
+                {
+                    <span style="color:white" @onclick="(async () => await HtmlGenerator.EpuipDigestListAreaDoneAsync(memberId,i0))">
+                        <span title="@equipTypes[i].Description">
+                            @buiName
+                            :&nbsp;
+                        </span>
+                        <span title="@description">
+                            @name
+                        </span>
+                    </span>
+                }
+                else
+                {
+                    <span style="color:gray">
+                        <span title="@equipTypes[i].Description">
+                            @buiName
+                            :&nbsp;
+                        </span>
+                        <span title="@description">
+                            @name
+                        </span>
+                    </span>
+                }
+                <br />
+            }
+            <br />
+        }
+        @if (HtmlGenerator.IsEquipButtonDisabled == null || HtmlGenerator.IsEquipButtonEnabledForDirectAPI)
+        {
+            @foreach (var item in ANGFLib.State.GetEquipSets())
+            {
+                var memberIds2 = ANGFLib.Party.EnumPartyMembers().ToArray();
+                foreach (var memberId0 in memberIds2)
+                {
+                    ANGFLib.Person member0 = ANGFLib.Person.List[memberId0];
+                    ANGFLib.IPartyMember pmember = member0 as ANGFLib.IPartyMember;
+                    if (pmember.GetDirectEquipEnabled())
+                    {
+
+                        var memberId = memberId0;   // capture
+                        ANGFLib.Person member = ANGFLib.Person.List[memberId];
+                        string label = item;
+                        if (memberIds2.Count() > 1)
+                        {
+                            label += "⇒" + member.HumanReadableName;
+                        }
+                        <button class="btn btn-primary" @onclick="(async () => await HtmlGenerator.setEquipSetAsync(memberId,item))">@label</button>
+                        <br />
+                    }
+                }
+            }
+        }
+    }
+</nav>
+
+@code {
+    protected override void OnAfterRender(bool firstRender)
+    {
+        HtmlGenerator.OnInitializedSub2(this);
+        ANGFLib.State.EquipChangeNotify = () =>
+        {
+            Update();
+            return default;
+        };
+    }
+    public void Update()
+    {
+        _ = InvokeAsync(() =>
+        {
+            StateHasChanged();
+        });
+    }
+}

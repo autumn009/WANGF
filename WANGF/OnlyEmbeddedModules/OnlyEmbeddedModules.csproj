@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\waExtOtsukai\waExtOtsukai.csproj" />
+    <ProjectReference Include="..\waFirstOtsukai\waFirstOtsukai.csproj" />
+    <ProjectReference Include="..\waFirstRPG\waFirstRPG.csproj" />
+    <ProjectReference Include="..\wangflib\wangflib.csproj" />
+    <ProjectReference Include="..\waSimpleRPGBase\waSimpleRPGBase.csproj" />
+  </ItemGroup>
+
+</Project>

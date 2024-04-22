@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "プロファイル 1": {
+      "commandName": "Executable",
+      "executablePath": "C:\\xgit\\WANGF\\WANGF\\BlazorMaui001\\bin\\DirectKickable\\net8.0-windows10.0.19041.0\\win10-x64\\BlazorMaui001.exe"
+    },
+    "プロファイル 2": {
+      "commandName": "Project"
+    }
+  }
+}

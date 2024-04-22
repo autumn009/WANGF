@@ -1,0 +1,121 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33015.44
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wangflib", "wangflib\wangflib.csproj", "{F880735F-CDD7-4168-B288-57558197358A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "waRazorUI", "waRazorUI\waRazorUI.csproj", "{E251E449-25E8-4F2A-AC1B-4F68D1749CA7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{693F158B-47B8-4212-885C-DF63243D8EC8}"
+	ProjectSection(SolutionItems) = preProject
+		JournalSpec.txt = JournalSpec.txt
+		readme.txt = readme.txt
+		sysdata.htm = sysdata.htm
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{62C9CA36-C57C-4F26-AA73-CA835BCC3256}"
+	ProjectSection(SolutionItems) = preProject
+		copyCommon.cmd = copyCommon.cmd
+		copyDebug.cmd = copyDebug.cmd
+		copyRelease.cmd = copyRelease.cmd
+		createMauiInstaller.bat = createMauiInstaller.bat
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "waFirstRPG", "waFirstRPG\waFirstRPG.csproj", "{BD70A04C-2953-48F1-A5F5-B1098B427CC2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "waSimpleRPGBase", "waSimpleRPGBase\waSimpleRPGBase.csproj", "{FA8FA66E-4B5E-42D6-973C-DEF67826BF58}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorMaui001", "BlazorMaui001\BlazorMaui001.csproj", "{D6998142-CF92-4CB5-8323-7A9281471C29}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9166C520-37BC-4CD1-94CC-4F566434A5B7} = {9166C520-37BC-4CD1-94CC-4F566434A5B7}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWA009", "BlazorWA009\BlazorWA009.csproj", "{1ACAAC02-FDFA-4BD4-AE79-60E0EEAB2E13}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlyEmbeddedModules", "OnlyEmbeddedModules\OnlyEmbeddedModules.csproj", "{9166C520-37BC-4CD1-94CC-4F566434A5B7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "waFirstOtsukaiRazor", "waFirstOtsukaiRazor\waFirstOtsukaiRazor.csproj", "{4115CCB0-7FA8-4FAB-B08F-685934B771A1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "waFirstOtsukai", "waFirstOtsukai\waFirstOtsukai.csproj", "{5530478A-A89E-4406-AD2B-0F4DBC5F3A89}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "waExtOtsukai", "waExtOtsukai\waExtOtsukai.csproj", "{38282D69-1C68-4830-BA5B-6337A00EA8BF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		DirectKickable|Any CPU = DirectKickable|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F880735F-CDD7-4168-B288-57558197358A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F880735F-CDD7-4168-B288-57558197358A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F880735F-CDD7-4168-B288-57558197358A}.DirectKickable|Any CPU.ActiveCfg = DirectKickable|Any CPU
+		{F880735F-CDD7-4168-B288-57558197358A}.DirectKickable|Any CPU.Build.0 = DirectKickable|Any CPU
+		{F880735F-CDD7-4168-B288-57558197358A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F880735F-CDD7-4168-B288-57558197358A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E251E449-25E8-4F2A-AC1B-4F68D1749CA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E251E449-25E8-4F2A-AC1B-4F68D1749CA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E251E449-25E8-4F2A-AC1B-4F68D1749CA7}.DirectKickable|Any CPU.ActiveCfg = DirectKickable|Any CPU
+		{E251E449-25E8-4F2A-AC1B-4F68D1749CA7}.DirectKickable|Any CPU.Build.0 = DirectKickable|Any CPU
+		{E251E449-25E8-4F2A-AC1B-4F68D1749CA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E251E449-25E8-4F2A-AC1B-4F68D1749CA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD70A04C-2953-48F1-A5F5-B1098B427CC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD70A04C-2953-48F1-A5F5-B1098B427CC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD70A04C-2953-48F1-A5F5-B1098B427CC2}.DirectKickable|Any CPU.ActiveCfg = DirectKickable|Any CPU
+		{BD70A04C-2953-48F1-A5F5-B1098B427CC2}.DirectKickable|Any CPU.Build.0 = DirectKickable|Any CPU
+		{BD70A04C-2953-48F1-A5F5-B1098B427CC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD70A04C-2953-48F1-A5F5-B1098B427CC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA8FA66E-4B5E-42D6-973C-DEF67826BF58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA8FA66E-4B5E-42D6-973C-DEF67826BF58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA8FA66E-4B5E-42D6-973C-DEF67826BF58}.DirectKickable|Any CPU.ActiveCfg = DirectKickable|Any CPU
+		{FA8FA66E-4B5E-42D6-973C-DEF67826BF58}.DirectKickable|Any CPU.Build.0 = DirectKickable|Any CPU
+		{FA8FA66E-4B5E-42D6-973C-DEF67826BF58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA8FA66E-4B5E-42D6-973C-DEF67826BF58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6998142-CF92-4CB5-8323-7A9281471C29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6998142-CF92-4CB5-8323-7A9281471C29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6998142-CF92-4CB5-8323-7A9281471C29}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D6998142-CF92-4CB5-8323-7A9281471C29}.DirectKickable|Any CPU.ActiveCfg = DirectKickable|Any CPU
+		{D6998142-CF92-4CB5-8323-7A9281471C29}.DirectKickable|Any CPU.Build.0 = DirectKickable|Any CPU
+		{D6998142-CF92-4CB5-8323-7A9281471C29}.DirectKickable|Any CPU.Deploy.0 = DirectKickable|Any CPU
+		{D6998142-CF92-4CB5-8323-7A9281471C29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6998142-CF92-4CB5-8323-7A9281471C29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6998142-CF92-4CB5-8323-7A9281471C29}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{1ACAAC02-FDFA-4BD4-AE79-60E0EEAB2E13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1ACAAC02-FDFA-4BD4-AE79-60E0EEAB2E13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1ACAAC02-FDFA-4BD4-AE79-60E0EEAB2E13}.DirectKickable|Any CPU.ActiveCfg = DirectKickable|Any CPU
+		{1ACAAC02-FDFA-4BD4-AE79-60E0EEAB2E13}.DirectKickable|Any CPU.Build.0 = DirectKickable|Any CPU
+		{1ACAAC02-FDFA-4BD4-AE79-60E0EEAB2E13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1ACAAC02-FDFA-4BD4-AE79-60E0EEAB2E13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9166C520-37BC-4CD1-94CC-4F566434A5B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9166C520-37BC-4CD1-94CC-4F566434A5B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9166C520-37BC-4CD1-94CC-4F566434A5B7}.DirectKickable|Any CPU.ActiveCfg = Debug|Any CPU
+		{9166C520-37BC-4CD1-94CC-4F566434A5B7}.DirectKickable|Any CPU.Build.0 = Debug|Any CPU
+		{9166C520-37BC-4CD1-94CC-4F566434A5B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9166C520-37BC-4CD1-94CC-4F566434A5B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4115CCB0-7FA8-4FAB-B08F-685934B771A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4115CCB0-7FA8-4FAB-B08F-685934B771A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4115CCB0-7FA8-4FAB-B08F-685934B771A1}.DirectKickable|Any CPU.ActiveCfg = DirectKickable|Any CPU
+		{4115CCB0-7FA8-4FAB-B08F-685934B771A1}.DirectKickable|Any CPU.Build.0 = DirectKickable|Any CPU
+		{4115CCB0-7FA8-4FAB-B08F-685934B771A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4115CCB0-7FA8-4FAB-B08F-685934B771A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5530478A-A89E-4406-AD2B-0F4DBC5F3A89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5530478A-A89E-4406-AD2B-0F4DBC5F3A89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5530478A-A89E-4406-AD2B-0F4DBC5F3A89}.DirectKickable|Any CPU.ActiveCfg = DirectKickable|Any CPU
+		{5530478A-A89E-4406-AD2B-0F4DBC5F3A89}.DirectKickable|Any CPU.Build.0 = DirectKickable|Any CPU
+		{5530478A-A89E-4406-AD2B-0F4DBC5F3A89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5530478A-A89E-4406-AD2B-0F4DBC5F3A89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38282D69-1C68-4830-BA5B-6337A00EA8BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38282D69-1C68-4830-BA5B-6337A00EA8BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38282D69-1C68-4830-BA5B-6337A00EA8BF}.DirectKickable|Any CPU.ActiveCfg = DirectKickable|Any CPU
+		{38282D69-1C68-4830-BA5B-6337A00EA8BF}.DirectKickable|Any CPU.Build.0 = DirectKickable|Any CPU
+		{38282D69-1C68-4830-BA5B-6337A00EA8BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38282D69-1C68-4830-BA5B-6337A00EA8BF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1B2CBDE4-8F1E-4C91-AE3C-B411A22B447B}
+	EndGlobalSection
+EndGlobal

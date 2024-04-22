@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "waFirstOtsukai": {
+      "commandName": "Executable",
+      "executablePath": "C:\\xgit\\ANGF\\WANGF\\WANGFD\\bin\\Debug\\net5.0-windows\\WANGFD.exe"
+    }
+  }
+}
