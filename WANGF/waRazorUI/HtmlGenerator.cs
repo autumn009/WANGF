@@ -262,7 +262,7 @@ namespace waRazorUI
 
         public static async Task ShowGameSelectAsync(GameStartupInfo[] games)
         {
-            UI.Actions.SetPictureUrl("_content/waRazorUI/ISSU001.jpg");
+            UI.Actions.SetPictureUrl("_content/waRazorUI/WANGF001.jpg");
             string[] baseNames = new string[0];
             if (SystemFile.IsDebugMode) baseNames = new string[] { "Batch Test" };
             SimpleMenuType[] baseTypes = new SimpleMenuType[0];
