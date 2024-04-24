@@ -1,2 +1,2 @@
-set debrel=Relase
+set debrel=Release
 copyCommon.cmd

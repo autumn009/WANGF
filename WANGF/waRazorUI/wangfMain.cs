@@ -94,11 +94,11 @@ namespace waRazorUI
             //System.Diagnostics.Debug.WriteLine("done wangfUtil.EnumBuildinModules");
         }
 
-        public static RawMyXmlDoc[] StartModules()
-        {
-            //return Scenarios.SeekModulesFromRegistryOnly(null).Where(c => c.startupModule).OrderByDescending(c => SystemFile.GetTimeStamp(c.id)).ToArray();
-            return Scenarios.Modules.Where(c => c.startupModule).OrderByDescending(c => SystemFile.GetTimeStamp(c.id)).ToArray();
-        }
+        //public static RawMyXmlDoc[] StartModules()
+        //{
+        //return Scenarios.SeekModulesFromRegistryOnly(null).Where(c => c.startupModule).OrderByDescending(c => SystemFile.GetTimeStamp(c.id)).ToArray();
+        //return Scenarios.modules.Where(c => c.startupModule).OrderByDescending(c => SystemFile.GetTimeStamp(c.id)).ToArray();
+        //}
 
         public static async Task ExtensibleStartupAsync()
         {

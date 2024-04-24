@@ -96,8 +96,9 @@ namespace waRazorUI
         }
         public static async Task<IEnumerable<GameStartupInfo>> EnumFileModulesAsync()
         {
-            Scenarios.Modules = await GetMyDocsAsync();
-            return Scenarios.Modules.Where(c=>c.startupModule).Select(c => new FileGameStartupInfo(c.id, c.name, c, c.is18k, c.description, c.AutoTestEnabled ? MetaModuleAutoTest.Yes : MetaModuleAutoTest.No));
+            var m = await GetMyDocsAsync();
+            Scenarios.SetModules(m);
+            return m.Where(c=>c.startupModule).Select(c => new FileGameStartupInfo(c.id, c.name, c, c.is18k, c.description, c.AutoTestEnabled ? MetaModuleAutoTest.Yes : MetaModuleAutoTest.No));
         }
     }
 }

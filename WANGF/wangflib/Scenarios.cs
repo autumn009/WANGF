@@ -19,22 +19,11 @@ namespace ANGFLib
     public static class Scenarios
     {
         private static MyXmlDoc[] modules;
-        /// <summary>
-        /// MyXmlDoc型のモジュール一覧
-        /// </summary>
-        public static MyXmlDoc[] Modules
-        {
-            get { return modules; }
-            set { modules = value; }
-        }
-        static Scenarios()
-        {
-            Modules = new MyXmlDoc[0];
-        }
+        public static void SetModules(MyXmlDoc[] modules) => Scenarios.modules = modules;
         private static MyXmlDoc seekXmlDoc(string id)
         {
             // Modulesは先だって読み込まれて構築済みであるはずだ
-            var query = from n in Modules where n.id == id select n;
+            var query = from n in modules where n.id == id select n;
             return query.FirstOrDefault();
         }
 
@@ -85,7 +74,7 @@ namespace ANGFLib
         {
             List<MyXmlDoc> list = new List<MyXmlDoc>();
             // まだリストに入っておらず、既存モジュールをshareworldとして参照しているか
-            foreach (var n in Modules)
+            foreach (var n in modules)
             {
                 // 既にロード確定済みのモジュールは判定外 (厳密な判定はあとでもやるが、ここで刈り込んでおかないと無限ループする
                 if (assembliesToRead.FirstOrDefault((c) => c.Id == n.id) != null) continue;
@@ -110,7 +99,7 @@ namespace ANGFLib
             // リスト作成
             List<ReferModuleInfoEx> assembliesToRead = new List<ReferModuleInfoEx>();
             // seek システム拡張 (システム拡張のモジュールは他のモジュールに先立って読み込まれねばならない)
-            assembliesToRead.AddRange(Modules.Where(c => c.shareWorld == "ANGFSYSTEM").Select(c => new ReferModuleInfoEx() { Id = c.id, FullPath = c.ModuleDllFilePath, Name = c.name, MinVersion = c.MinVersion, AngfRuntimeXml = c }));
+            assembliesToRead.AddRange(modules.Where(c => c.shareWorld == "ANGFSYSTEM").Select(c => new ReferModuleInfoEx() { Id = c.id, FullPath = c.ModuleDllFilePath, Name = c.name, MinVersion = c.MinVersion, AngfRuntimeXml = c }));
 
             // seek targets
             seekDependentRecuresive(doc, assembliesToRead);
@@ -293,7 +282,7 @@ namespace ANGFLib
         /// <returns></returns>
         public static Version AssemblyGetVersion(ReferModuleInfo refModInfo)
         {
-            var module = Scenarios.Modules.First(c => c.id == refModInfo.Id);
+            var module = Scenarios.modules.First(c => c.id == refModInfo.Id);
             if (refModInfo.FullPath != null && (refModInfo.FullPath.ToLower().EndsWith(".dll") || refModInfo.FullPath.ToLower().EndsWith(".tmp")))
             {
                 return module.versionInfo;
@@ -315,10 +304,10 @@ namespace ANGFLib
             //if (targetModule != null) return targetModule;
 
             // バージョン一覧を満たす
-            foreach (var n in Scenarios.Modules.Where((c) => c.id == refModInfo.Id)) n.versionInfo = AssemblyGetVersion(refModInfo);
+            foreach (var n in Scenarios.modules.Where((c) => c.id == refModInfo.Id)) n.versionInfo = AssemblyGetVersion(refModInfo);
 
             // 候補一覧を得る
-            var q = from n in Scenarios.Modules
+            var q = from n in Scenarios.modules
                     where n.id == refModInfo.Id
                     select n;
 
