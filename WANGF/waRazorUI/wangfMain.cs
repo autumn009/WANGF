@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -118,6 +119,17 @@ namespace waRazorUI
                     var resname = System.IO.Path.GetFileNameWithoutExtension(name) + ".AngfRunTime.xml";
                     var stream = thismodex.GetType().Assembly.GetManifestResourceStream(resname);
                     myxdoc.LoadFromXDocument(XDocument.Load(stream), name);
+                    foreach (var item in thismodex.GetType().Assembly.GetManifestResourceNames())
+                    {
+                        if (item.ToLower().EndsWith(".wangftitle.jpg"))
+                        {
+                            using (MemoryStream ms = new MemoryStream())
+                            {
+                                thismodex.GetType().Assembly.GetManifestResourceStream(item).CopyTo(ms);
+                                myxdoc.TitlePicture = ms.ToArray();
+                            }
+                        }
+                    }
                 }
                 else
                     myxdoc.LoadFromXDocument(xgetter[0], "NO FILE NAME");

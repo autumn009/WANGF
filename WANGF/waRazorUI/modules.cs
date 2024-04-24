@@ -98,7 +98,7 @@ namespace waRazorUI
         {
             var m = await GetMyDocsAsync();
             Scenarios.SetModules(m);
-            return m.Where(c=>c.startupModule).Select(c => new FileGameStartupInfo(c.id, c.name, c, c.is18k, c.description, c.AutoTestEnabled ? MetaModuleAutoTest.Yes : MetaModuleAutoTest.No));
+            return m.Where(c=>c.startupModule).Select(c => new FileGameStartupInfo(c.id, c.name, c, c.is18k, c.description, c.AutoTestEnabled ? MetaModuleAutoTest.Yes : MetaModuleAutoTest.No, c.TitlePicture));
         }
     }
 }

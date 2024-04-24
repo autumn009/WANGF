@@ -222,6 +222,7 @@ namespace ANGFLib
         {
             var result = new MyXmlDoc();
             XDocument doc = null;
+            byte[] titlePicture = null;
             // 指定されたファイルが存在する場合は、それを読もうとする
             // 拡張子が".dll"ならリソース。それ以外ならXMLの生ファイル
             if (Path.GetExtension(filename).ToLower() != ".dll")
@@ -234,6 +235,7 @@ namespace ANGFLib
                 {
                     var assem = MyAssembly.MyReflectionOnlyLoadFrom(filename);
                     doc = seekAngfRuntimeXmlFile(assem);
+                    titlePicture = seekTitlePicture(assem);
                 }
                 catch (Exception ex)
                 {
@@ -248,6 +250,7 @@ namespace ANGFLib
             }
             if (!result.LoadFromXDocument(doc, filename)) return null;
             result.xmlFilePath = filename;
+            result.TitlePicture = titlePicture;
             return result;
         }
         public static MyXmlDoc LoadMyXmlDoc(Assembly assem)
@@ -265,6 +268,22 @@ namespace ANGFLib
                 if (n.ToLower().EndsWith(".angfruntime.xml"))
                 {
                     return XDocument.Load(assem.GetManifestResourceStream(n));
+                }
+            }
+            return null;    // not found
+        }
+        private static byte[] seekTitlePicture(Assembly assem)
+        {
+            foreach (var n in assem.GetManifestResourceNames())
+            {
+                System.Diagnostics.Debug.WriteLine(n);
+                if (n.ToLower().EndsWith(".wangftitle.jpg"))
+                {
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        assem.GetManifestResourceStream(n).CopyTo(ms);
+                        return ms.ToArray();
+                    }
                 }
             }
             return null;    // not found

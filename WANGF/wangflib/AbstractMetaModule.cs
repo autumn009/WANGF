@@ -9,7 +9,7 @@ using static System.Net.Mime.MediaTypeNames;
 namespace ANGFLib
 {
     public enum MetaModuleAutoTest { Yes, No }
-    public abstract record GameStartupInfo(string Id, string name, bool Is18K, string description, MetaModuleAutoTest autotest)
+    public abstract record GameStartupInfo(string Id, string name, bool Is18K, string description, MetaModuleAutoTest autotest, byte[] TitlePicture)
     {
         private string touchKey => $"ae690639-c2a0-4156-ae3c-cf067b2dd2f4_WANGF_Touch_{Id}";
         public DateTime GetTouchedDateTime()
@@ -34,7 +34,7 @@ namespace ANGFLib
     {
         public static Func<Type[], Task> myStartupAsync;
         private Type[] modules { get; init; }
-        public StaticGameStartupInfo(string id, string name, Type[] modules, bool Is18K, string description, MetaModuleAutoTest autotest) : base(id, name, Is18K, description, autotest)
+        public StaticGameStartupInfo(string id, string name, Type[] modules, bool Is18K, string description, MetaModuleAutoTest autotest) : base(id, name, Is18K, description, autotest, null)
         {
             this.modules = modules;
         }
@@ -60,7 +60,7 @@ namespace ANGFLib
     {
         public static Func<Task> myStartupAsync;
         private MyXmlDoc myDoc { get; init; }
-        public FileGameStartupInfo(string id, string name, MyXmlDoc myDoc, bool Is18K, string description, MetaModuleAutoTest autotest) : base(id, name, Is18K, description, autotest)
+        public FileGameStartupInfo(string id, string name, MyXmlDoc myDoc, bool Is18K, string description, MetaModuleAutoTest autotest, byte[] titlePicture) : base(id, name, Is18K, description, autotest, titlePicture)
         {
             this.myDoc = myDoc;
         }

@@ -260,9 +260,16 @@ namespace waRazorUI
             source.Cancel();
         }
 
+        private static string getTitleUri(GameStartupInfo[] games)
+        {
+            var ar = games.Where(c => c.TitlePicture != null).Select(c => c.TitlePicture).ToArray();
+            if (ar.Length == 0) return null;
+            return "data:image/jpeg;base64," + Convert.ToBase64String(ar[Random.Shared.Next(ar.Length)]);
+        }
+
         public static async Task ShowGameSelectAsync(GameStartupInfo[] games)
         {
-            UI.Actions.SetPictureUrl("_content/waRazorUI/WANGF001.jpg");
+            UI.Actions.SetPictureUrl(getTitleUri(games)??"_content/waRazorUI/WANGF001.jpg");
             string[] baseNames = new string[0];
             if (SystemFile.IsDebugMode) baseNames = new string[] { "Batch Test" };
             SimpleMenuType[] baseTypes = new SimpleMenuType[0];

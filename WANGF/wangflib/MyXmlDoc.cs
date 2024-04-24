@@ -87,7 +87,10 @@ namespace ANGFLib
         /// 自動テスト可能ならtrue
         /// </summary>
         public bool AutoTestEnabled;
-
+        /// <summary>
+        /// 起動時のタイトルCG(JEPG)があればそのファイルイメージ。なければnull
+        /// </summary>
+        public byte[] TitlePicture;
     }
     /// <summary>
     /// AngfRuntime.xmlを内部処理用に表現します
