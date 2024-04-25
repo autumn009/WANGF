@@ -31,7 +31,14 @@ namespace waRazorUI
         {
             var s1 = GetOnlyEmbeddedModules() ?? Enumerable.Empty<GameStartupInfo>();
             var s2 = Enumerable.Empty<GameStartupInfo>();
-            if (!General.IsBlazorWebAssembly()) s2 = await FileModules.EnumFileModulesAsync();
+            if (!General.IsBlazorWebAssembly())
+            {
+                s2 = await FileModules.EnumFileModulesAsync();
+                if(!General.IsBlazorWebAssembly() &&  s2.Count()==0)
+                {
+                    DefaultPersons.システムWarn.Say("モジュールが見つかりません。これが意図しない動作の場合、各モジュール(DLL)へのショートカットがC:\\ProgramData\\autumn\\WANGF\\modulesに存在するか確認してください。ハードリンク、シンボリックリンクではなくショートカットが必要です。");
+                }
+            }
             var s3 = new SystemGameStartupInfos();
             return s1.Concat(s2).Concat(s3.EnumEmbeddedModules());
 
