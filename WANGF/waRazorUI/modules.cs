@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Metadata;
+using System.Runtime.CompilerServices;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -16,6 +17,12 @@ namespace waRazorUI
 {
     public class SystemGameStartupInfos : GameStartupInfos
     {
+        /// <summary>
+        /// スタートするゲーム数が0のときは警告する。
+        /// その判定を行うため、システムモジュールはカウントから除外される。
+        /// そのため自動でリストする処理には無視させる
+        /// </summary>
+        public override bool IsIgnoreFromTopMenu { get; set; } = true;
         public override IEnumerable<GameStartupInfo> EnumEmbeddedModules()
         {
             return new StaticGameStartupInfo[]
@@ -57,6 +64,7 @@ namespace waRazorUI
                         if (!type.IsAbstract && type.IsSubclassOf(typeof(GameStartupInfos)))
                         {
                             var n = (GameStartupInfos)Activator.CreateInstance(type);
+                            if( n.IsIgnoreFromTopMenu) continue; // トップメニューに表示しない
                             if (seq == null) seq = Enumerable.Empty<GameStartupInfo>();
                             seq = seq.Concat(n.EnumEmbeddedModules());
                         }

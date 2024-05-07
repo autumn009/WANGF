@@ -303,7 +303,7 @@ namespace waRazorUI
                 if (touchRequest) games[index].Touch();   // タイムスタンプ更新
                 await games[index].StartGameAsync();
             };
-            // Shift+Ctrlfが押されているときはバッチテストを開始しない
+            // Shift+Ctrlが押されているときはバッチテストを開始しない
             if (!RealtimeKeyScan.IsShiftAndCtrlKeyPress() && await BatchTest.BatchTestingForEachTitle.IsBatchTestingAsync())
             {
                 //if (!General.IsBlazorWebAssembly())

@@ -27,6 +27,7 @@ namespace ANGFLib
 
     public abstract class GameStartupInfos
     {
+        public virtual bool IsIgnoreFromTopMenu { get; set; }
         public abstract IEnumerable<GameStartupInfo> EnumEmbeddedModules();
     }
 
