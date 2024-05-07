@@ -36,7 +36,8 @@ namespace waRazorUI
     {
         public static async Task<IEnumerable<GameStartupInfo>> EnumEmbeddedModulesAsync()
         {
-            var seq = GetOnlyEmbeddedModules() ?? Enumerable.Empty<GameStartupInfo>();
+            var seq = GetOnlyEmbeddedModules();
+            System.Diagnostics.Debug.Assert(seq != null);
             if (!General.IsBlazorWebAssembly())
             {
                 seq = seq.Concat(await FileModules.EnumFileModulesAsync());
@@ -56,7 +57,7 @@ namespace waRazorUI
 
             IEnumerable<GameStartupInfo> GetOnlyEmbeddedModules()
             {
-                IEnumerable<GameStartupInfo> seq = null;
+                IEnumerable<GameStartupInfo> seq = Enumerable.Empty<GameStartupInfo>();
                 foreach (var assem in AppDomain.CurrentDomain.GetAssemblies())
                 {
                     foreach (var type in assem.GetTypes())
@@ -65,7 +66,6 @@ namespace waRazorUI
                         {
                             var n = (GameStartupInfos)Activator.CreateInstance(type);
                             if( n.IsIgnoreFromTopMenu) continue; // トップメニューに表示しない
-                            if (seq == null) seq = Enumerable.Empty<GameStartupInfo>();
                             seq = seq.Concat(n.EnumEmbeddedModules());
                         }
                     }
