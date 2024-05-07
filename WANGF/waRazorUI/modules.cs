@@ -49,21 +49,20 @@ namespace waRazorUI
 
             IEnumerable<GameStartupInfo> GetOnlyEmbeddedModules()
             {
+                IEnumerable<GameStartupInfo> seq = null;
                 foreach (var assem in AppDomain.CurrentDomain.GetAssemblies())
                 {
                     foreach (var type in assem.GetTypes())
                     {
-                        if (type != null && type.Name != null)
+                        if (!type.IsAbstract && type.IsSubclassOf(typeof(GameStartupInfos)))
                         {
-                            if (type.Name.Contains("OnlyGameStartupInfos"))
-                            {
-                                var n = (GameStartupInfos)Activator.CreateInstance(type);
-                                return n.EnumEmbeddedModules();
-                            }
+                            var n = (GameStartupInfos)Activator.CreateInstance(type);
+                            if (seq == null) seq = Enumerable.Empty<GameStartupInfo>();
+                            seq = seq.Concat(n.EnumEmbeddedModules());
                         }
                     }
                 }
-                return null;
+                return seq;
             }
         }
     }
