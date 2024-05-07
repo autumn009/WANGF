@@ -35,7 +35,7 @@ namespace ANGFLib
     {
         public static Func<Type[], Task> myStartupAsync;
         private Type[] modules { get; init; }
-        public StaticGameStartupInfo(string id, string name, Type[] modules, bool Is18K, string description, MetaModuleAutoTest autotest) : base(id, name, Is18K, description, autotest, null)
+        public StaticGameStartupInfo(string id, string name, Type[] modules, bool Is18K, string description, MetaModuleAutoTest autotest, byte[] titlePicture = null) : base(id, name, Is18K, description, autotest, titlePicture)
         {
             this.modules = modules;
         }
