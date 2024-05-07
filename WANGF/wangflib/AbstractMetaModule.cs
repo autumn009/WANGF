@@ -43,15 +43,13 @@ namespace ANGFLib
         {
             await myStartupAsync(modules);
         }
-        public static StaticGameStartupInfo Create(Type[] modules)
+        public static StaticGameStartupInfo Create(Type[] modules, Type startupModule = null)
         {
-            foreach (var item in modules.Reverse())
+            if (startupModule == null) startupModule = modules.Last();
+            var doc = Util.LoadMyXmlDoc(startupModule.Assembly);
+            if (doc != null)
             {
-                var doc = Util.LoadMyXmlDoc(item.Assembly);
-                if (doc != null)
-                {
-                    return new StaticGameStartupInfo(doc.id, doc.name, modules, doc.is18k, doc.description, doc.AutoTestEnabled? MetaModuleAutoTest.Yes: MetaModuleAutoTest.No);
-                }
+                return new StaticGameStartupInfo(doc.id, doc.name, modules, doc.is18k, doc.description, doc.AutoTestEnabled ? MetaModuleAutoTest.Yes : MetaModuleAutoTest.No, Util.SeekTitlePicture(startupModule.Assembly));
             }
             return null;
         }

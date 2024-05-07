@@ -235,7 +235,7 @@ namespace ANGFLib
                 {
                     var assem = MyAssembly.MyReflectionOnlyLoadFrom(filename);
                     doc = seekAngfRuntimeXmlFile(assem);
-                    titlePicture = seekTitlePicture(assem);
+                    titlePicture = SeekTitlePicture(assem);
                 }
                 catch (Exception ex)
                 {
@@ -272,7 +272,7 @@ namespace ANGFLib
             }
             return null;    // not found
         }
-        private static byte[] seekTitlePicture(Assembly assem)
+        public static byte[] SeekTitlePicture(Assembly assem)
         {
             foreach (var n in assem.GetManifestResourceNames())
             {
