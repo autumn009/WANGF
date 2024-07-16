@@ -36,7 +36,7 @@ namespace waRazorUI
     {
         public static async Task<IEnumerable<GameStartupInfo>> EnumEmbeddedModulesAsync()
         {
-            var seq = GetOnlyEmbeddedModules();
+            var seq = Util.GetOnlyEmbeddedModules();
             System.Diagnostics.Debug.Assert(seq != null);
             if (!General.IsBlazorWebAssembly())
             {
@@ -54,24 +54,6 @@ namespace waRazorUI
                 }
             }
             return seq.Concat(new SystemGameStartupInfos().EnumEmbeddedModules());
-
-            IEnumerable<GameStartupInfo> GetOnlyEmbeddedModules()
-            {
-                IEnumerable<GameStartupInfo> seq = Enumerable.Empty<GameStartupInfo>();
-                foreach (var assem in AppDomain.CurrentDomain.GetAssemblies())
-                {
-                    foreach (var type in assem.GetTypes())
-                    {
-                        if (!type.IsAbstract && type.IsSubclassOf(typeof(GameStartupInfos)))
-                        {
-                            var n = (GameStartupInfos)Activator.CreateInstance(type);
-                            if( n.IsIgnoreFromTopMenu) continue; // トップメニューに表示しない
-                            seq = seq.Concat(n.EnumEmbeddedModules());
-                        }
-                    }
-                }
-                return seq;
-            }
         }
     }
     public static class FileModules

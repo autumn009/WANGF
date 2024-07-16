@@ -43,26 +43,74 @@ namespace ANGFLib
     public static class Util
     {
         /// <summary>
-        /// 現在のアセンブリはAssembly.GetExecutingAssembly()で取る
+        /// 指定されたアセンブリのリストから指定された型をリストしてそのインスタンスを作成して列挙する
+        /// abstractクラスと、ExcludeAttribute付きの型は除外される
         /// </summary>
-        /// <typeparam name="TargetType"></typeparam>
-        /// <param name="targetAssebmbly"></param>
-        /// <returns></returns>
-        public static TargetType[] CollectTypedObjects<TargetType>(Assembly targetAssebmbly)
+        /// <typeparam name="TargetType">インスタンスを欲しい型</typeparam>
+        /// <param name="enableDetector">その型を列挙に含めるか判定するカスタムデリゲート</param>
+        /// <param name="targetAssebmbles">対象とするアセンブリ一覧</param>
+        /// <returns>該当する型のインスタンスの列挙</returns>
+        public static IEnumerable<TargetType> CollectTypedObjects<TargetType>(Func<TargetType, bool> enableDetector, params Assembly[] targetAssebmbles) where TargetType : class
         {
-            List<TargetType> list = new List<TargetType>();
-            foreach (var t in targetAssebmbly.GetTypes())
+            foreach (var targetAssebmbly in targetAssebmbles)
             {
-                if (t.IsAbstract) continue;
-                if (t.IsSubclassOf(typeof(TargetType)))
+                foreach (var t in targetAssebmbly.GetTypes())
                 {
-                    if (t.GetCustomAttributes(typeof(ExcludeAttribute), false).Length == 0)
+                    if (t.IsAbstract) continue;
+                    if (t.IsSubclassOf(typeof(TargetType)))
                     {
-                        list.Add((TargetType)Activator.CreateInstance(t));
+                        if (t.GetCustomAttributes(typeof(ExcludeAttribute), false).Length == 0)
+                        {
+                            var tgt = (TargetType)Activator.CreateInstance(t);
+                            var paramValue = tgt as TargetType;
+                            if (paramValue != null)
+                            {
+                                if (enableDetector(paramValue)) yield return tgt;
+                            }
+                        }
                     }
                 }
             }
-            return list.ToArray();
+        }
+        /// <summary>
+        /// 引数で指定されたアセンブリの中の指定された型のインスタンスの配列を返す
+        /// abstractクラスと、ExcludeAttribute付きの型は除外される
+        /// </summary>
+        /// <typeparam name="TargetType">対象とする型</typeparam>
+        /// <param name="targetAssebmbly">対象アセンブリ(現在のアセンブリはAssembly.GetExecutingAssembly()で取る)</param>
+        /// <returns></returns>
+        public static TargetType[] CollectTypedObjects<TargetType>(Assembly targetAssebmbly) where TargetType : class
+        {
+            return CollectTypedObjects<TargetType>((dummy) => true, targetAssebmbly).ToArray();
+        }
+        /// <summary>
+        /// 全てのアセンブリからGameStartupInfosから継承したクラスのインスタンスからGameStartupInfoを列挙する
+        /// </summary>
+        /// <returns>GameStartupInfo型インスタンスの列挙</returns>
+        public static IEnumerable<GameStartupInfo> GetOnlyEmbeddedModules()
+        {
+#if true
+                IEnumerable<GameStartupInfo> seq = Enumerable.Empty<GameStartupInfo>();
+                foreach (var assem in AppDomain.CurrentDomain.GetAssemblies())
+                {
+                    foreach (var type in assem.GetTypes())
+                    {
+                        if (!type.IsAbstract && type.IsSubclassOf(typeof(GameStartupInfos)))
+                        {
+                            var n = (GameStartupInfos)Activator.CreateInstance(type);
+                            if( n.IsIgnoreFromTopMenu) continue; // トップメニューに表示しない
+                            seq = seq.Concat(n.EnumEmbeddedModules());
+                        }
+                    }
+                }
+                return seq;
+
+#else
+            var all = CollectTypedObjects<GameStartupInfos>((type) => !type.IsIgnoreFromTopMenu, AppDomain.CurrentDomain.GetAssemblies());
+            var seq = Enumerable.Empty<GameStartupInfo>();
+            foreach (var item in all) seq = seq.Concat(item.EnumEmbeddedModules());
+            return seq;
+#endif
         }
         /// <summary>
         /// 
