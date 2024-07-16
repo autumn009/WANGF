@@ -306,7 +306,7 @@ namespace ANGFLib
         {
             foreach (var n in assem.GetManifestResourceNames())
             {
-                System.Diagnostics.Debug.WriteLine(n);
+                //System.Diagnostics.Debug.WriteLine(n);
                 if (n.ToLower().EndsWith(".wangftitle.jpg"))
                 {
                     using (MemoryStream ms = new MemoryStream())

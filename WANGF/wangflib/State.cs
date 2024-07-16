@@ -46,15 +46,6 @@ namespace ANGFLib
             get
             {
                 if (Flags.CurrentPlaceId == null || Flags.CurrentPlaceId == "") return Places.PlaceNull;
-#if DEBUG
-                var s = $"SimpleName<Place>.List = {SimpleName<Place>.List.Count}({string.Join(",", SimpleName<Place>.List.Keys)}) CurrentPlaceId={Flags.CurrentPlaceId}";
-                System.Diagnostics.Debug.WriteLine(s);
-
-                if ( !SimpleName<Place>.List.ContainsKey(Flags.CurrentPlaceId) )
-                {
-                    System.Diagnostics.Debug.Assert(false, "{Flags.CurrentPlaceId}ÇÕïsê≥Ç»CurrentPlaceIdÇ≈Ç∑ÅB");
-                }
-#endif
                 return SimpleName<Place>.List[Flags.CurrentPlaceId];
             }
             set
