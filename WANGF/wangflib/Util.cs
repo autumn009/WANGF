@@ -89,28 +89,10 @@ namespace ANGFLib
         /// <returns>GameStartupInfo型インスタンスの列挙</returns>
         public static IEnumerable<GameStartupInfo> GetOnlyEmbeddedModules()
         {
-#if true
-                IEnumerable<GameStartupInfo> seq = Enumerable.Empty<GameStartupInfo>();
-                foreach (var assem in AppDomain.CurrentDomain.GetAssemblies())
-                {
-                    foreach (var type in assem.GetTypes())
-                    {
-                        if (!type.IsAbstract && type.IsSubclassOf(typeof(GameStartupInfos)))
-                        {
-                            var n = (GameStartupInfos)Activator.CreateInstance(type);
-                            if( n.IsIgnoreFromTopMenu) continue; // トップメニューに表示しない
-                            seq = seq.Concat(n.EnumEmbeddedModules());
-                        }
-                    }
-                }
-                return seq;
-
-#else
             var all = CollectTypedObjects<GameStartupInfos>((type) => !type.IsIgnoreFromTopMenu, AppDomain.CurrentDomain.GetAssemblies());
             var seq = Enumerable.Empty<GameStartupInfo>();
             foreach (var item in all) seq = seq.Concat(item.EnumEmbeddedModules());
             return seq;
-#endif
         }
         /// <summary>
         /// 
