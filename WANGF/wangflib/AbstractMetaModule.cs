@@ -29,6 +29,7 @@ namespace ANGFLib
     {
         public virtual bool IsIgnoreFromTopMenu { get; set; }
         public abstract IEnumerable<GameStartupInfo> EnumEmbeddedModules();
+        public virtual string VersionMessage { get; } = "";
     }
 
     public record StaticGameStartupInfo : GameStartupInfo

@@ -19,5 +19,6 @@ namespace OnlyEmbeddedModules
                 StaticGameStartupInfo.Create(new Type[]{ typeof(FirstOtsukai.HaoModuleEx) ,typeof(ExtOtsukai.ExtOtsukaiModuleEx)}),
             };
         }
+        public override string VersionMessage => "Basic Games 0.01";
     }
 }

@@ -81,6 +81,7 @@ namespace waRazorUI
         public static string[] DateTimeOptions;
         public static int DateTimeOption;
         public static int duplicateIndexInCreateMenuItemsAsync = -1;
+        public static string AddtionalVersionMessage = "";
 
         public static async Task PopupCloseAsync()
         {
@@ -479,6 +480,9 @@ await Console.Out.WriteLineAsync("A1");
             //CultureInfo.CurrentCulture = new CultureInfo("ja-JP");
             //Console.WriteLine($"{System.Threading.Thread.CurrentThread.CurrentCulture} {System.Threading.Thread.CurrentThread.ManagedThreadId}");
             //Console.WriteLine(Thread.CurrentThread.CurrentCulture.Name);
+
+            // Create Additional Version String HERE!
+            AddtionalVersionMessage = string.Join(";", Util.CollectTypedObjects<GameStartupInfos>((type) => true, AppDomain.CurrentDomain.GetAssemblies()).Where(c => c.VersionMessage.Length > 0).Select(c => c.VersionMessage));
         }
 
         public static void OnInitializedSub2(object form)
