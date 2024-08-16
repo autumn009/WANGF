@@ -251,7 +251,9 @@ namespace waRazorUI
             else
             {
                 Process.Start(Environment.ProcessPath);
-                Environment.Exit(0);
+                //Thread.Sleep(5000); // test gurd time
+                //Environment.Exit(0);
+                Process.GetCurrentProcess().Kill();
             }
         }
 
