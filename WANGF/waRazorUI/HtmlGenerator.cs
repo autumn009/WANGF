@@ -37,7 +37,7 @@ namespace waRazorUI
         public static bool nextButtonEnabled = false;
         public static string[] listLabels = null;
         public static SimpleMenuType[] SimpleMenuTypes = null;
-        private static string[] actualListLabels = null;
+        //private static string[] actualListLabels = null;
         public static string[] listExplanations = null;
         public static string[] listMouseOverTexts = null;
         public static string menuPrompt;
@@ -208,7 +208,7 @@ namespace waRazorUI
 
         static void RawSimpleMenu(string[] labels, SimpleMenuType[] types, string[] explanations, string[] mouseOverTexts, Func<int, bool, Task> done)
         {
-            actualListLabels = labels;
+            //actualListLabels = labels;
             if (labels.Length < 1)
                 listLabels = getDefaultValue();
             else
