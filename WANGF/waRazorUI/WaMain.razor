@@ -369,16 +369,10 @@ else
     }
 }
 
-@if (HtmlGenerator.GameHintUrl != null)
+@foreach(var item in HtmlGenerator.GetExtraHtmls())
 {
-    <div style="text-align:center">
-        <mark>[[<a href="@HtmlGenerator.GameHintUrl">このゲームのヒント情報</a>]]</mark>
-    </div>
+    @((MarkupString)item)
 }
-
-<div style="text-align:center">
-    [[<a href="http://erika.piedey.co.jp/wangfrank/" target="_blank">このゲームのランキング</a>]]
-</div>
 
 @if (HtmlGenerator.IsAdEnabled())
 {

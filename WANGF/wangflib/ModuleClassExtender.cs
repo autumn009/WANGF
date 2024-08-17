@@ -20,22 +20,24 @@ namespace ANGFLib
     /// </summary>
     public static class ModuleClassExtender
     {
-        private static Dictionary<Module, ReferModuleInfo> dic = new Dictionary<Module, ReferModuleInfo>();
+        // キーはModule型のフルネームである
+        private static Dictionary<string, ReferModuleInfo> dic = new Dictionary<string, ReferModuleInfo>();
         /// <summary>
         /// 内部利用専用です。
         /// </summary>
         public static ReferModuleInfo GetXmlModuleData(this Module mod)
         {
-            return dic[mod];
+            return dic[mod.GetType().FullName];
         }
         /// <summary>
         /// 内部利用専用です。
         /// </summary>
         public static void SetXmlModuleData(this Module mod, ReferModuleInfo newData)
         {
-            dic[mod] = newData;
+            dic[mod.GetType().FullName] = newData;
         }
-        private static Dictionary<ModuleEx, ReferModuleInfo> dicex = new Dictionary<ModuleEx, ReferModuleInfo>();
+        // キーはModuleEx型のフルネームである
+        private static Dictionary<string, ReferModuleInfo> dicex = new Dictionary<string, ReferModuleInfo>();
         /// <summary>
         /// 内部利用専用です。
         /// </summary>
@@ -48,14 +50,14 @@ namespace ANGFLib
         /// </summary>
         public static ReferModuleInfo GetXmlModuleData(this ModuleEx modex)
         {
-            return dicex[modex];
+            return dicex[modex.GetType().FullName];
         }
         /// <summary>
         /// 内部利用専用です。
         /// </summary>
         public static void SetXmlModuleData(this ModuleEx modex, ReferModuleInfo newData)
         {
-            dicex[modex] = newData;
+            dicex[modex.GetType().FullName] = newData;
         }
         private static Dictionary<ModuleEx, ANGFLib.Module[]> modules = new Dictionary<ModuleEx, Module[]>();
         /// <summary>

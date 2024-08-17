@@ -398,7 +398,7 @@ namespace ANGFLib
             }
         }
 
-        public virtual string [] GetLinkedPlaceIds()
+        public virtual string[] GetLinkedPlaceIds()
         {
             return new string[0];
         }
@@ -721,11 +721,11 @@ namespace ANGFLib
         public virtual EquipType[] GetEquipTypes()
         {
             return new EquipType[0]
-                /*{
-                    new EquipType() {  Name="上服", StatusName="Upper", Priority=100, },
-                    new EquipType() {  Name="下服", StatusName="Lower", Priority=200,},
-                    new EquipType() {  Name="アクセサリ", StatusName="Access.", Priority=300,},
-                }*/
+               /*{
+                   new EquipType() {  Name="上服", StatusName="Upper", Priority=100, },
+                   new EquipType() {  Name="下服", StatusName="Lower", Priority=200,},
+                   new EquipType() {  Name="アクセサリ", StatusName="Access.", Priority=300,},
+               }*/
                ;
         }
         /// <summary>
@@ -833,7 +833,7 @@ namespace ANGFLib
         /// 実行前に呼ばれます
         /// </summary>
         /// <returns>trueを返します。</returns>
-        public virtual async Task<bool> OnInitAsync() { await Task.Delay(0);  return true; }
+        public virtual async Task<bool> OnInitAsync() { await Task.Delay(0); return true; }
         /// <summary>
         /// 実行前に呼ばれます
         /// </summary>
@@ -931,7 +931,7 @@ namespace ANGFLib
         /// <returns>詳細はモジュール定義です。</returns>
         public virtual Task<bool> OnExtraJurnalPlaybackAsync(string[] paramArray)/* DIABLE ASYNC WARN */
         {
-            throw new ApplicationException("OnExtraJurnalPlaybackはこのモジュールではサポートされていません。"); 
+            throw new ApplicationException("OnExtraJurnalPlaybackはこのモジュールではサポートされていません。");
         }
         /// <summary>
         /// オフィシャルサイトのURLを返します。HELPメニュー作成時に動的に呼ばれるので、動的に構築できます

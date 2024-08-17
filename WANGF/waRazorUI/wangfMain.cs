@@ -150,8 +150,8 @@ namespace waRazorUI
                     thismod.SetAngfRuntimeXml(myxdoc);
                     last = thismod;
                 }
-                var hints = thismodex.QueryObjects<GameHintInfo>();
-                foreach (var hint in hints) HtmlGenerator.GameHintUrl = hint.GameHintUrl;
+                //var hints = thismodex.QueryObjects<GameHintInfo>();
+                //foreach (var hint in hints) HtmlGenerator.GameHintUrl = hint.GameHintUrl;
 
                 var s = await Scenarios.LoadObjectAsync(thismodex);
                 if (s != null) startPlaceId = s;

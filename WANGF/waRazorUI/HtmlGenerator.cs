@@ -66,7 +66,7 @@ namespace waRazorUI
         public static FlagEditorInfo[] FlagEditorList;
         public static FlagEditorInfo SelectedFlagItem;
         public static string FlagInputTextValue;
-        public static string GameHintUrl;
+        //public static string GameHintUrl;
         public static bool UploadEnabled = false;
         public static bool UploadJournalingEnabled => SystemFile.IsDebugMode;
         public static string UploadDescription => UploadEnabled ? "全ファイルZIP" : "再生ジャーナリングファイル";
@@ -1586,6 +1586,30 @@ await Console.Out.WriteLineAsync("A1");
         public static void SetEqItemId(string id)
         {
             eqItemId = id;
+        }
+
+        public static IEnumerable<string> GetExtraHtmls()
+        {
+            foreach (var item in State.LoadedModulesEx)
+            {
+                var normalModule = ModuleClassExtender.GetModules(item).FirstOrDefault();
+                if (normalModule == null) continue;
+                var gameHints = item.QueryObjects<GameHintInfo>();
+                foreach (var gameHint in gameHints)
+                {
+                    var gameName = normalModule.GetXmlModuleData().Name;
+                    var url = gameHint.GameHintUrl;
+                    yield return $"<div style=\"text-align:center\">[[<a href=\"{url}\" >{gameName}のヒント情報</a>]]</div>";
+                }
+            }
+            foreach (var item in State.LoadedModulesEx)
+            {
+                var mod = item.QueryObjects<ExtraFooterProvider>();
+                foreach (var m in mod)
+                {
+                    yield return m.GetHtmlFragment();
+                }
+            }
         }
 
         private RenderFragment CreateComponent() => builder =>
