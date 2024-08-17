@@ -90,6 +90,15 @@ namespace ANGFLib
     }
 
     /// <summary>
+    /// メインページのフッターに出力するHTMLフラグメントを提供するクラス
+    /// (QueryObjectsで返すためのクラス)
+    /// </summary>
+    public abstract class Advertisement
+    {
+        public abstract string GetHtmlFragment();
+    }
+
+    /// <summary>
     /// バージョン3以降で使用されるモジュール定義取得クラスです
     /// </summary>
     public abstract class ModuleEx

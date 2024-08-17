@@ -374,26 +374,9 @@ else
     @((MarkupString)item)
 }
 
-@if (HtmlGenerator.IsAdEnabled())
+@foreach (var item in HtmlGenerator.GetAdvertisements())
 {
-    var ad = HtmlGenerator.GetNextAd();
-    @if( ad != null)
-    {
-        <div class="adblock" style="display: flex;">
-            <div style="font-size: smaller;" class="addiv1">
-                広告
-            </div>
-            <div class="addiv2">
-                <a href="@ad.Uri" target="_blank">@ad.Description</a>
-            </div>
-            <div class="addiv1">
-                <a href="@ad.AuthorUri" target="_blank">@ad.AuthorName</a>著
-            </div>
-            <div style="font-size: smaller;" class="addiv2">
-                <a href="https://www.piedey.co.jp/blog/default.modf?s=ep" target="_blank"><img src="_content/waRazorUI/pdlogo.jpg" /></a>
-            </div>
-        </div>
-    }
+    @((MarkupString)item)
 }
 
 <div class="text-center p-1" style="background-color: black">

@@ -1185,15 +1185,6 @@ await Console.Out.WriteLineAsync("A1");
             });
             listMenus = list.Concat(SimpleName<MenuItem>.List.Values).Where(c => c.MenuType == MyMenuType.Top).ToArray();
         }
-        internal static bool IsAdEnabled()
-        {
-            return Is18K != null;
-        }
-        internal static AdInfo GetNextAd()
-        {
-            if (Is18K == null) return null;
-            return AdBlock.GetNextAd(Is18K.Value);
-        }
 
         public static async Task FlagInputSETClickedAsync()
         {
@@ -1610,6 +1601,19 @@ await Console.Out.WriteLineAsync("A1");
                 }
             }
         }
+
+        public static IEnumerable<string> GetAdvertisements()
+        {
+            foreach (var item in State.LoadedModulesEx)
+            {
+                var mod = item.QueryObjects<Advertisement>();
+                foreach (var m in mod)
+                {
+                    yield return m.GetHtmlFragment();
+                }
+            }
+        }
+
 
         private RenderFragment CreateComponent() => builder =>
         {
