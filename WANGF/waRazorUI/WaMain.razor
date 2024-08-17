@@ -394,9 +394,15 @@ else
     @if (waRazorUIConstants.IsTesting)
     {
         <span>本ソフトは公開テスト中です。</span>
-    }
-    <span>不具合、疑問点がある場合は、<a href="https://twitter.com/KIRARIN56294043" > Twitterの同人サークルKIRARIN公式(@@KIRARIN56294043) </a> までご一報下さい。</span>
+            <span>フレームワーク、開発キットに関して不具合、疑問点がある場合は、<a href="https://x.com/KawamataAkira"> X(Twitter)の川俣晶(@@KawamataAkira) </a> までご一報下さい。</span>
+        }
 </div>
+    @foreach (var item in HtmlGenerator.GetFooterReportsTo())
+    {
+       <div style="text-align:center">
+            @((MarkupString)item)
+       </div>
+    }
 }
 else
 {

@@ -99,6 +99,15 @@ namespace ANGFLib
     }
 
     /// <summary>
+    /// メインページのフッターに出力するレポート先HTMLフラグメントを提供するクラス
+    /// (QueryObjectsで返すためのクラス)
+    /// </summary>
+    public abstract class FooterReportsTo
+    {
+        public abstract string GetHtmlFragment();
+    }
+
+    /// <summary>
     /// バージョン3以降で使用されるモジュール定義取得クラスです
     /// </summary>
     public abstract class ModuleEx

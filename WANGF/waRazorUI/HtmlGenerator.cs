@@ -1614,6 +1614,17 @@ await Console.Out.WriteLineAsync("A1");
             }
         }
 
+        public static IEnumerable<string> GetFooterReportsTo()
+        {
+            foreach (var item in State.LoadedModulesEx)
+            {
+                var mod = item.QueryObjects<FooterReportsTo>();
+                foreach (var m in mod)
+                {
+                    yield return m.GetHtmlFragment();
+                }
+            }
+        }
 
         private RenderFragment CreateComponent() => builder =>
         {
