@@ -870,7 +870,7 @@ namespace ANGFLib
                 {
                     if (!await UI.YesNoMenuAsync("セーブしていないデータは全て失われます。ゲームを終了しますか?", "はい", "いいえ")) return true;
                     if (!await UI.YesNoMenuAsync("本当に終了するのですね?", "はい", "いいえ")) return true;
-                    Environment.Exit(0);
+                    System.Diagnostics.Process.GetCurrentProcess().Kill();
                     return true;
                 })
                 { MenuType = SimpleMenuType.Hot });
