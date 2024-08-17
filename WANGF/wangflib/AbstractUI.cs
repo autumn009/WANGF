@@ -692,14 +692,14 @@ namespace ANGFLib
         {
             return await UI.Actions.ChangeCycleAsync();
         }
-        static private bool SystemInfo()
+        static private async Task<bool> SystemInfoAsync()
         {
             DefaultPersons.システム.Say("現在の所持金: {0}", Flags.所持金);
             DefaultPersons.システム.Say("現在の所持スター: {0}", StarManager.GetStars());
 #if MYBLAZORAPP
             DefaultPersons.システム.Say($"現在のプラットフォーム: {State.PlatformName ?? "Unknown"}");
             var host = General.IsInAzure() ? "Azure/ネット送信可能" : "Other/ネット送信不可";
-            DefaultPersons.システム.Say($"現在のホスト: { host }");
+            DefaultPersons.システム.Say($"現在のホスト: {host}");
             var blazor = General.IsBlazorWebAssembly() ? "WebAssembly" : "Server";
             DefaultPersons.システム.Say($"現在のBlazor: {blazor}");
 #if DEBUG
@@ -712,6 +712,35 @@ namespace ANGFLib
             if (State.IsInWebPlayer) f = true;
             DefaultPersons.システム.Say("現在のストレージ: {0}", f ? "クラウド" : "ローカル");
 #endif
+            if (!await UI.YesNoMenuAsync("技術詳細情報に進みますか?", "終わる", "技術詳細情報を見る"))
+            {
+                DefaultPersons.独白.Say($"現在読み込まれているモジュール一覧");
+                foreach (var mod in State.loadedModules)
+                {
+                    var xmlDoc = mod.GetAngfRuntimeXml();
+                    DefaultPersons.独白.Say($"*****************");
+                    DefaultPersons.独白.Say($"Name={xmlDoc.name}");
+                    DefaultPersons.独白.Say($"Id(XMLDOC)={xmlDoc.id}");
+                    DefaultPersons.独白.Say($"Id(MODULE)={mod.Id}");
+                    DefaultPersons.独白.Say($"Description={xmlDoc.description}");
+                    DefaultPersons.独白.Say($"Is18K={xmlDoc.is18k}");
+                    DefaultPersons.独白.Say($"MinVersion={xmlDoc.MinVersion}");
+                    DefaultPersons.独白.Say($"shareWorld={xmlDoc.shareWorld}");
+                    DefaultPersons.独白.Say($"shareWorldMinVersion={xmlDoc.shareWorldMinVersion}");
+                    DefaultPersons.独白.Say($"versionInfo={xmlDoc.versionInfo}");
+                    DefaultPersons.独白.Say($"startupModule={xmlDoc.startupModule}");
+                    if (SystemFile.IsDebugMode)
+                    {
+                        DefaultPersons.独白.Say($"AutoTestEnabled={xmlDoc.AutoTestEnabled}");
+                    }
+                    foreach (var item in xmlDoc.require)
+                    {
+                        DefaultPersons.独白.Say($"require Name={item.Name}");
+                        DefaultPersons.独白.Say($"require Id={item.Id}");
+                        DefaultPersons.独白.Say($"require MinVersion={item.MinVersion}");
+                    }
+                }
+            }
             return true;
         }
 
@@ -778,7 +807,7 @@ namespace ANGFLib
                     return false;
                 }));
             }
-            items.Add(new SimpleMenuItem("システム詳細情報", SystemInfo));
+            items.Add(new SimpleMenuItem("システム詳細情報", SystemInfoAsync));
             if (SystemFile.IsDebugMode)
             {
                 items.Add(new SimpleMenuItem("デバッグ用無制限時間移動", async () =>

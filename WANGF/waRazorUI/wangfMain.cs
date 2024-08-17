@@ -70,7 +70,7 @@ namespace waRazorUI
             await GetBatchTestingAsync();
 
             ScenarioThread.InitUIActions();
-            State.PlatformName = "Blazor";
+            State.PlatformName = "Blazor " + (General.IsBlazorWebAssembly() ? "WebAssembly" : "MAUI");
             General.ReportError = (message) =>
             {
                 //throw new ApplicationException(message);
