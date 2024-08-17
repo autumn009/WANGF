@@ -142,5 +142,10 @@ namespace ANGFLib
         /// リンク移動で消費する分数のデフォルト値
         /// </summary>
         public const int DefaultLinkMoveMin = 10;
+
+        /// <summary>
+        /// WANGFのベースページ
+        /// </summary>
+        public const string wangfBasePageUrl = "https://www.piedey.co.jp/blog/Content.modf?id=20240817174619";
     }
 }
