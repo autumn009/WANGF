@@ -137,6 +137,10 @@ namespace FirstOtsukai
                     new int[0].First();
                     await Task.Delay(0);
                 }},
+                new MenuItem(){ Label="モジュールの二重作成 (例外発生)", MenuType= MyMenuType.Info, MethodAsync=async (mainForm)=>{
+                    new HaoModule();
+                    await Task.Delay(0);
+                }},
 //#endif
     			};
             }

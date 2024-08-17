@@ -940,7 +940,7 @@ namespace ANGFLib
         public virtual SiteInfo[] GetOfficialSiteUrl() { return new SiteInfo[0]; }
 
 
-        private Dictionary<string,bool> created = new Dictionary<string, bool>();
+        private static Dictionary<string,bool> created = new Dictionary<string, bool>();
         /// <summary>
         /// コンストラクタ: 二重作成の禁止
         /// </summary>
