@@ -19,14 +19,6 @@
     <DefineConstants />
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="adblock.tsv" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="adblock.tsv" />
-  </ItemGroup>
-
 <ItemGroup>
 	<AssemblyAttribute Include="waRazorUI.BuildDateTime">
 		<_Parameter1>$([System.DateTime]::Now.ToString("yyyyMMddHHmmss"))</_Parameter1>
