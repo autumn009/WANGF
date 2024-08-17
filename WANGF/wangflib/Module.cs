@@ -938,5 +938,19 @@ namespace ANGFLib
         /// </summary>
         /// <returns>サイト情報の配列</returns>
         public virtual SiteInfo[] GetOfficialSiteUrl() { return new SiteInfo[0]; }
+
+
+        private Dictionary<string,bool> created = new Dictionary<string, bool>();
+        /// <summary>
+        /// コンストラクタ: 二重作成の禁止
+        /// </summary>
+        public Module()
+        {
+            if (created.ContainsKey(this.GetType().FullName))
+            {
+                throw new ApplicationException("Moduleクラスは二重作成できません。取得にはModuleClassExtender.GetModulesを使って下さい。");
+            }
+            created.Add(this.GetType().FullName, true);
+        }
     }
 }
