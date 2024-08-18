@@ -42,7 +42,7 @@ namespace waRazorUI
         public static string[] listMouseOverTexts = null;
         public static string menuPrompt;
         public static Func<int, Task> menuDoneAsync;/* DIABLE ASYNC WARN */
-        public static string debugMessage = "";
+        //public static string debugMessage = "";
         public static string RealtimeStatusMessage = "";
         public static string myMarkup = "";    // WANGF.Client.wangfMain.GetMainAreaHtmlString();
         public static string splashMarkup = "";
@@ -62,7 +62,7 @@ namespace waRazorUI
         public static string SimpleListTitle;
         public static Tuple<string, string>[] SimpleList;
         public static string ExceptionInfo;
-        public static bool? Is18K { get; set; } = null;
+        //public static bool? Is18K { get; set; } = null;
         public static FlagEditorInfo[] FlagEditorList;
         public static FlagEditorInfo SelectedFlagItem;
         public static string FlagInputTextValue;
@@ -299,7 +299,7 @@ namespace waRazorUI
                 HtmlGenerator.IsGameExplainEnabled = false;
                 if (index < 0) return;  // do nothing
                 General.GameTitle = games[index].name;  // set game title as selected
-                HtmlGenerator.Is18K = games[index].Is18K;
+                //HtmlGenerator.Is18K = games[index].Is18K;
                 StaticGameStartupInfo.myStartupAsync = wangfMain.StartupAsync;
                 FileGameStartupInfo.myStartupAsync = wangfMain.ExtensibleStartupAsync;
                 if (touchRequest) games[index].Touch();   // タイムスタンプ更新
