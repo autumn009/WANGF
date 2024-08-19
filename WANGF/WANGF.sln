@@ -41,6 +41,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "waFirstOtsukai", "waFirstOt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "waExtOtsukai", "waExtOtsukai\waExtOtsukai.csproj", "{38282D69-1C68-4830-BA5B-6337A00EA8BF}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupRuntime", "SetupRuntime\SetupRuntime.vdproj", "{3880F267-E2A7-43A1-93CC-35D0E2024A9F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,9 @@ Global
 		{38282D69-1C68-4830-BA5B-6337A00EA8BF}.DirectKickable|Any CPU.Build.0 = DirectKickable|Any CPU
 		{38282D69-1C68-4830-BA5B-6337A00EA8BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38282D69-1C68-4830-BA5B-6337A00EA8BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3880F267-E2A7-43A1-93CC-35D0E2024A9F}.Debug|Any CPU.ActiveCfg = Debug
+		{3880F267-E2A7-43A1-93CC-35D0E2024A9F}.DirectKickable|Any CPU.ActiveCfg = Debug
+		{3880F267-E2A7-43A1-93CC-35D0E2024A9F}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
