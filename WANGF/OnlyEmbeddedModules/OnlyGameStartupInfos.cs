@@ -11,6 +11,8 @@ namespace OnlyEmbeddedModules
             return new StaticGameStartupInfo[]
             {
                 // これらの行を削除してあなたのモジュールを追加してください
+                // ハロー・ワールド
+                StaticGameStartupInfo.Create(new Type[]{ typeof(HelloWorld.HelloWorldModuleEx) }),
                 // はじめてのRPG
                 StaticGameStartupInfo.Create(new Type[]{ typeof(RpgBaseModuleEx), typeof(waFirstRPG.HarModuleEx)}),
                 // はじめてのお使い

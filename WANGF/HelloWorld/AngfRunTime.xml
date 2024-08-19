@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://angf.autumn.org/std001">
+  <module>HelloWorld.dll</module>
+  <startupModule>1</startupModule>
+  <name>HelloWorld</name>
+  <description>最初の一歩となる最低限のモジュールです</description>
+  <id>{c0541918-4b45-4b25-9a6f-09d42cffb978}</id>
+  <shareWorld></shareWorld>
+  <require></require>
+</root>

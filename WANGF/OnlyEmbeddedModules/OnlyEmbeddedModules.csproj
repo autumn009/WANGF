@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HelloWorld\HelloWorld.csproj" />
     <ProjectReference Include="..\waExtOtsukai\waExtOtsukai.csproj" />
     <ProjectReference Include="..\waFirstOtsukai\waFirstOtsukai.csproj" />
     <ProjectReference Include="..\waFirstRPG\waFirstRPG.csproj" />

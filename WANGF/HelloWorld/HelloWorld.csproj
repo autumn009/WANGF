@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="AngfRunTime.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="AngfRunTime.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="wangflib">
+      <HintPath>..\wangflib\bin\Release\net8.0\wangflib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
