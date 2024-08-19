@@ -29,7 +29,7 @@ namespace StartMeFirst
 
         private void update()
         {
-            buttonSetupRuntime.Enabled = File.Exists("SetupRuntime.exe");
+            buttonSetupRuntime.Enabled = File.Exists("Setup.exe");
             buttonLinkModules.Enabled = File.Exists("modules.txt");
             buttonGame.Enabled = File.Exists("BlazorMaui001.exe");
         }
@@ -68,19 +68,20 @@ namespace StartMeFirst
 
         private void buttonSetupRuntime_Click(object sender, EventArgs e)
         {
-            Process.Start("BlazorMaui001.exe");
+            Process.Start("Setup.exe");
         }
 
         private void buttonLinkModules_Click(object sender, EventArgs e)
         {
             var programDataPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-            var dstPath = Path.Combine(programDataPath, "autumn", "modules");
+            var dstPath = Path.Combine(programDataPath, "autumn", "WANGF", "modules");
+            Directory.CreateDirectory(dstPath);
             var lines = File.ReadAllLines("modules.txt");
             foreach (var item in lines)
             {
                 if (string.IsNullOrWhiteSpace(item)) continue;
                 var src = Path.Combine(Directory.GetCurrentDirectory(), item);
-                var dst = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), item);
+                var dst = Path.ChangeExtension(Path.Combine(dstPath,Path.GetFileName(item)), ".lnk");
                 createShortCut(dst, src);
             }
             MessageBox.Show(this, "リンク作成終了。ゲームを起動できます。");
@@ -89,6 +90,7 @@ namespace StartMeFirst
         private void buttonGame_Click(object sender, EventArgs e)
         {
             Process.Start("BlazorMaui001.exe");
+            this.Close();
         }
 
         private void buttonExit_Click(object sender, EventArgs e)
