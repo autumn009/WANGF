@@ -43,6 +43,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "waExtOtsukai", "waExtOtsuka
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupRuntime", "SetupRuntime\SetupRuntime.vdproj", "{3880F267-E2A7-43A1-93CC-35D0E2024A9F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StartMeFirst", "StartMeFirst\StartMeFirst.csproj", "{AC532127-1758-4929-A950-37D1F83058C1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -116,6 +118,12 @@ Global
 		{3880F267-E2A7-43A1-93CC-35D0E2024A9F}.Debug|Any CPU.ActiveCfg = Debug
 		{3880F267-E2A7-43A1-93CC-35D0E2024A9F}.DirectKickable|Any CPU.ActiveCfg = Debug
 		{3880F267-E2A7-43A1-93CC-35D0E2024A9F}.Release|Any CPU.ActiveCfg = Release
+		{AC532127-1758-4929-A950-37D1F83058C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC532127-1758-4929-A950-37D1F83058C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC532127-1758-4929-A950-37D1F83058C1}.DirectKickable|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC532127-1758-4929-A950-37D1F83058C1}.DirectKickable|Any CPU.Build.0 = Debug|Any CPU
+		{AC532127-1758-4929-A950-37D1F83058C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC532127-1758-4929-A950-37D1F83058C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
