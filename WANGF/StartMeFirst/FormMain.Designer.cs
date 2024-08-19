@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.buttonSetupRuntime = new System.Windows.Forms.Button();
             this.buttonLinkModules = new System.Windows.Forms.Button();
             this.buttonGame = new System.Windows.Forms.Button();
@@ -97,6 +98,7 @@
             this.Controls.Add(this.buttonGame);
             this.Controls.Add(this.buttonLinkModules);
             this.Controls.Add(this.buttonSetupRuntime);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FormMain";
             this.Text = "WANGF Start Me First";
