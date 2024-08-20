@@ -10,7 +10,7 @@ namespace waRazorUI
     {
         internal const string ShortName = "WANGF";
         internal const string LongName = "Web Autumn's Novel Game Framework";
-        internal const string Version = "0.33 Beta";
+        internal const string Version = "0.34 Beta";
         internal static string BuildDateTimeString
         {
             get
