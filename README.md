@@ -3,7 +3,8 @@ Web Autumn's Novel Game Framework
 
 ## その他のドキュメント
 
-TBW
+- Quick Tutorial (Hello World解説) https://github.com/autumn009/WANGF/blob/main/quicktutorial.md
+- その他の雑多な情報 https://github.com/autumn009/WANGF/blob/main/misc.md
 
 ## 1. Introduction
 　WAGFはノベルゲームのフレームワークです。文字だけで表現するゲームを作成するためのフレームワークです。絵も音もないゲームの世界です。ただし、絵や音を入れることは可能です。シェアワールドの機能を持っていて、既存のモジュールを1バイトも書き換えることなく、拡張することが出来ます。
