@@ -10,6 +10,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{693F158B-47B8-4212-885C-DF63243D8EC8}"
 	ProjectSection(SolutionItems) = preProject
 		JournalSpec.txt = JournalSpec.txt
+		..\misc.md = ..\misc.md
+		..\quicktutorial.md = ..\quicktutorial.md
+		..\README.md = ..\README.md
 		readme.txt = readme.txt
 		sysdata.htm = sysdata.htm
 	EndProjectSection
@@ -45,7 +48,7 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupRuntime", "SetupRuntim
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StartMeFirst", "StartMeFirst\StartMeFirst.csproj", "{AC532127-1758-4929-A950-37D1F83058C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld", "HelloWorld\HelloWorld.csproj", "{BF4D8F99-8999-4BC3-B8F0-7B99EC80D194}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloWorld", "HelloWorld\HelloWorld.csproj", "{BF4D8F99-8999-4BC3-B8F0-7B99EC80D194}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
