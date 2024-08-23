@@ -9,12 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "waRazorUI", "waRazorUI\waRa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{693F158B-47B8-4212-885C-DF63243D8EC8}"
 	ProjectSection(SolutionItems) = preProject
+		..\desktopwebdiff.md = ..\desktopwebdiff.md
 		JournalSpec.txt = JournalSpec.txt
 		..\misc.md = ..\misc.md
 		..\quicktutorial.md = ..\quicktutorial.md
 		..\README.md = ..\README.md
-		readme.txt = readme.txt
-		sysdata.htm = sysdata.htm
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{62C9CA36-C57C-4F26-AA73-CA835BCC3256}"
